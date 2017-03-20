@@ -9,3 +9,4 @@ gitHub service from the inside out. If you're new like me and you're interested 
 The source code for all of the classes are in src/com/mygdx/game and all of the images and textures are in the assets folder.
 
 I am using the latest version of eclipse and gradle, so you'll need the same to work on this project.
+
