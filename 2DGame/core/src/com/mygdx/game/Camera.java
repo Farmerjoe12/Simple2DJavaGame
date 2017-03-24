@@ -44,7 +44,6 @@ public class Camera {
 		// the world is visible in the viewport, basically the "zoom" value
 		cam = new OrthographicCamera(27,27 * (h/w));
 		
-		
 		cam.position.set((cam.viewportWidth / 2f) + 21, 
 				(cam.viewportHeight / 2f) + 4, 0);
 		
@@ -74,7 +73,6 @@ public class Camera {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             cam.translate(0, translateSpeed, 0);
         }
-        
 
     	effectiveViewportWidth = cam.viewportWidth * cam.zoom;
         effectiveViewportHeight = cam.viewportHeight * cam.zoom;
@@ -87,8 +85,7 @@ public class Camera {
         
         cam.position.y = MathUtils.clamp(cam.position.y, 
         		effectiveViewportHeight / boundaryClampValue,
-        		99 - effectiveViewportHeight / boundaryClampValue);
-        		
+        		99 - effectiveViewportHeight / boundaryClampValue);        	
     }
     
     public static void dispose() {
