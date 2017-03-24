@@ -17,12 +17,14 @@ public class Camera {
 
 	private OrthographicCamera cam;
 	private float w, h;
-	private float rotationSpeed;
 	private static SpriteBatch batch;
 	private static Sprite mapSprite;
 	private float translateSpeed;
 	private static final int WORLD_WIDTH = 100, WORLD_HEIGHT = 100;
-	
+	private float effectiveViewportWidth;
+	private float effectiveViewportHeight;
+	private float boundaryClampValue = 32f;
+    
 	public Camera() {
 		// Map creation
 		batch = new SpriteBatch();
@@ -30,13 +32,23 @@ public class Camera {
 		mapSprite.setPosition(0,0);
 		mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 		
+		// translateSpeed here is used to control the speed that the camera moves 
+		// when the player presses the arrow keys i.e. "moving" the sprite 
+		translateSpeed = 0.08f;
+		
 		// Camera creation and functionality
-		translateSpeed = 0.1f;
-		rotationSpeed = 0.5f;
 		w = Gdx.graphics.getWidth();
 		h = Gdx.graphics.getHeight();
-		cam = new OrthographicCamera(30,30 * (h/w));
-		cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
+		
+		// the values passed into the camera constructor represent how much of 
+		// the world is visible in the viewport, basically the "zoom" value
+		cam = new OrthographicCamera(27,27 * (h/w));
+		
+		
+		cam.position.set((cam.viewportWidth / 2f) + 21, 
+				(cam.viewportHeight / 2f) + 4, 0);
+		
+		// not sure if this call to update is really neccessary
 		cam.update();
 	}
 	
@@ -50,12 +62,6 @@ public class Camera {
 	}
 
     private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            cam.zoom += 0.02;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            cam.zoom -= 0.02;
-        }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             cam.translate(-translateSpeed, 0, 0);
         }
@@ -68,20 +74,21 @@ public class Camera {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             cam.translate(0, translateSpeed, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            cam.rotate(-rotationSpeed, 0, 0, 1);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
-            cam.rotate(rotationSpeed, 0, 0, 1);
-        }
+        
 
-        cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 100/cam.viewportWidth);
-
-        float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
-        float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
-
-        cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
-        cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
+    	effectiveViewportWidth = cam.viewportWidth * cam.zoom;
+        effectiveViewportHeight = cam.viewportHeight * cam.zoom;
+        
+        // boundaryClampValue represents the clamping of the camera to a certain 
+        // value where the camera will move in regards to the edge of the map
+        cam.position.x = MathUtils.clamp(cam.position.x, 
+        		effectiveViewportWidth / boundaryClampValue,
+        		99 - effectiveViewportWidth / boundaryClampValue);
+        
+        cam.position.y = MathUtils.clamp(cam.position.y, 
+        		effectiveViewportHeight / boundaryClampValue,
+        		99 - effectiveViewportHeight / boundaryClampValue);
+        		
     }
     
     public static void dispose() {
