@@ -16,7 +16,7 @@ public class Player {
 	private static Sprite player;
 	private Animator walkUP, walkDOWN, walkLEFT, walkRIGHT;
 	private Animator currAnimation = null;
-	private State state;
+	//private State state;
 	private int lastDir = 0;
 	
 	public Player() {
@@ -36,9 +36,7 @@ public class Player {
 	}
 	
 	private Animator getAnim() {
-		state = StateMachine.getInput();
-		
-		switch (state) {
+		switch (StateMachine.getState()) {
 		
 		case UP: {
 			lastDir = 1;
