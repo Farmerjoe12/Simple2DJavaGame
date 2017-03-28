@@ -1,10 +1,12 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 /** 
  * Animator is used to provide the animations for the sprites
@@ -31,7 +33,7 @@ public class Animator {
 		// frameTime controls the speed of the animation, lower is faster
 		frameTime = 0.2f;
 		
-		walkSheet = new Texture(Gdx.files.internal("lastguardian_all.png"));
+		walkSheet = new Texture(Gdx.files.internal("assets/lastguardian_all.png"));
 		
 		// this array is populated with individual indexes of sprites from the 
 		// sprite sheet to make them easily accessible
@@ -54,12 +56,13 @@ public class Animator {
 		stateTime = 0f;
 	}
 	
-	public void render() {
+	public void render(Vector2 position, OrthographicCamera cam) {
 		
 		stateTime += Gdx.graphics.getDeltaTime();
 		currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+		spriteBatch.setProjectionMatrix(cam.combined);
 		spriteBatch.begin();
-		spriteBatch.draw(currentFrame, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		spriteBatch.draw(currentFrame, position.x, position.y);
 		spriteBatch.end();
 	}
 	
