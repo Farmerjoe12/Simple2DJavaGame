@@ -18,11 +18,7 @@ public class Player {
 	private static Sprite player;
 	private Animator walkUP, walkDOWN, walkLEFT, walkRIGHT;
 	private Animator currAnimation = null;
-	private State state;
 	private int lastDir = 0;
-	private int mapID = 1;
-	private float mapX = Gdx.graphics.getWidth() / 2;
-	private float mapY = Gdx.graphics.getHeight() / 2;
 	final Vector2 position = new Vector2();
 	final Vector2 speed = new Vector2();
 	OrthographicCamera cam;
@@ -47,9 +43,8 @@ public class Player {
 	}
 	
 	private Animator getAnim() {
-		state = StateMachine.getInput();
 		
-		switch (state) {
+		switch (StateMachine.getState()) {
 		
 		case UP: {
 			lastDir = 1;
@@ -115,5 +110,11 @@ public class Player {
 
 	public void setBatch(SpriteBatch batch) {
 		this.batch = batch;
+	}
+	
+	public void setLoc(int x, int y)
+	{
+		this.position.x = (float)x * 32;
+		this.position.y = (float)y * 32;
 	}
 }

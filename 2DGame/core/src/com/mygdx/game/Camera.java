@@ -1,17 +1,13 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.MathUtils;
 
 /**
  * Camera is a meaty class, containing both the ortho cam and the world map
@@ -21,16 +17,6 @@ import com.badlogic.gdx.math.MathUtils;
 public class Camera {
 
 	private OrthographicCamera cam;
-	private float w, h;
-	private static SpriteBatch batch;
-	private static Sprite mapSprite;
-	private float translateSpeed;
-	private static final int WORLD_WIDTH = 100, WORLD_HEIGHT = 100;
-	private float effectiveViewportWidth;
-	private float effectiveViewportHeight;
-	private float boundaryClampValue = 32f;
-	private float posX;
-	private float posY;
 	
 	private Player player;
 	
@@ -40,7 +26,6 @@ public class Camera {
     
 	public Camera() {		
 		// loading in Tiled map, initializing the renderer
-		
 		tiledMap = new TmxMapLoader().load("2.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		prop = tiledMap.getProperties();
@@ -61,9 +46,6 @@ public class Camera {
 	}
 	
 	public void render() {
-		
-		// haven't used this yet, will be needed soon
-		float deltaTime = Gdx.graphics.getDeltaTime();
 		
 		// set the player position to project according to the camera rather than the window
 		player.getBatch().setProjectionMatrix(cam.combined);

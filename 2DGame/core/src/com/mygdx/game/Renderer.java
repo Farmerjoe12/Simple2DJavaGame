@@ -10,8 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
  *
  */
 public class Renderer {
-
-	//private static Player player = new Player();
+	
 	private static Camera cam = new Camera();
 	
 	public static void render() {
@@ -19,7 +18,6 @@ public class Renderer {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		cam.render();
-		//player.render();
 		
 	}
 }
