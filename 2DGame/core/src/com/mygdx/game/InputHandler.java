@@ -17,6 +17,6 @@ public class InputHandler {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) { return LEFT; }
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) { return RIGHT; }
 		
-		return 0;
+		return -1;
 	}
 }

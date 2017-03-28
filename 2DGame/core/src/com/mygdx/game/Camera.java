@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -61,16 +60,18 @@ public class Camera {
 	}
 
     private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+    	int input = InputHandler.getInput();
+    	
+        if (input ==  InputHandler.LEFT) {
             cam.translate(-translateSpeed, 0, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if (input == InputHandler.RIGHT) {
             cam.translate(translateSpeed, 0, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        if (input == InputHandler.DOWN) {
             cam.translate(0, -translateSpeed, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        if (input == InputHandler.UP) {
             cam.translate(0, translateSpeed, 0);
         }
 
