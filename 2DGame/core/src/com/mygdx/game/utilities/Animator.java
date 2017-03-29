@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.utilities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -28,12 +28,12 @@ public class Animator {
 	private float frameTime;
 	
 	
-	public Animator(int row, int startSprite, int endSprite) {
+	public Animator(int startSprite, int endSprite) {
 		
 		// frameTime controls the speed of the animation, lower is faster
 		frameTime = 0.2f;
 		
-		walkSheet = new Texture(Gdx.files.internal("assets/lastguardian_all.png"));
+		walkSheet = new Texture(Gdx.files.internal("lastguardian_all.png"));
 		
 		// this array is populated with individual indexes of sprites from the 
 		// sprite sheet to make them easily accessible
@@ -44,33 +44,25 @@ public class Animator {
 		// walkFrames is used to hold the frames or sprites that will be cycled 
 		// by an animation
 		walkFrames = new TextureRegion[2];
-		
-		// the next logic is just populating an array to iterate through to make the walk
-		walkFrames[0] = tmp[row][startSprite];
-		walkFrames[1] = tmp[row][endSprite];
-		
-		
+
+		walkFrames[0] = tmp[0][startSprite];
+		walkFrames[1] = tmp[0][endSprite];
+
 		walkAnimation = new Animation<TextureRegion>(frameTime, walkFrames);
 		
 		spriteBatch = new SpriteBatch();
 		stateTime = 0f;
 	}
 	
-	public void render(Vector2 position, OrthographicCamera cam) {
-		
+
+	public TextureRegion getCurrentTextureRegion()
+	{
 		stateTime += Gdx.graphics.getDeltaTime();
 		currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-		spriteBatch.setProjectionMatrix(cam.combined);
-		spriteBatch.begin();
-		spriteBatch.draw(currentFrame, position.x, position.y);
-		spriteBatch.end();
+		return currentFrame;
 	}
 	
-	public SpriteBatch getSpriteBatch() {
-		return spriteBatch;
-	}
 
-	
 	public static void dispose() {
 		spriteBatch.dispose();
 		walkSheet.dispose();
