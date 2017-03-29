@@ -1,11 +1,13 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 /**
  * Camera is a meaty class, containing both the ortho cam and the world map
@@ -15,82 +17,108 @@ import com.badlogic.gdx.math.MathUtils;
 public class Camera {
 
 	private OrthographicCamera cam;
-	private float w, h;
-	private static SpriteBatch batch;
-	private static Sprite mapSprite;
-	private float translateSpeed;
-	private static final int WORLD_WIDTH = 100, WORLD_HEIGHT = 100;
-	private float effectiveViewportWidth;
-	private float effectiveViewportHeight;
-	private float boundaryClampValue = 32f;
+	
+	private Player player;
+	
+	TiledMap tiledMap;
+	TiledMapRenderer tiledMapRenderer;
+	MapProperties prop;
     
-	public Camera() {
-		// Map creation
-		batch = new SpriteBatch();
-		mapSprite = new Sprite(new Texture(Gdx.files.internal("CastleExample.png")));
-		mapSprite.setPosition(0,0);
-		mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
+	public Camera() {		
+		// loading in Tiled map, initializing the renderer
+		tiledMap = new TmxMapLoader().load("2.tmx");
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+		prop = tiledMap.getProperties();
 		
-		// translateSpeed here is used to control the speed that the camera moves 
-		// when the player presses the arrow keys i.e. "moving" the sprite 
-		translateSpeed = 0.08f;
+		// initialize camera, set to view of 30x20 tiles at 32px per tile
+		cam = new OrthographicCamera();
+		cam.setToOrtho(false, 960, 640);
 		
-		// Camera creation and functionality
-		w = Gdx.graphics.getWidth();
-		h = Gdx.graphics.getHeight();
-		
-		// the values passed into the camera constructor represent how much of 
-		// the world is visible in the viewport, basically the "zoom" value
-		cam = new OrthographicCamera(27,27 * (h/w));
-		
-		cam.position.set((cam.viewportWidth / 2f) + 21, 
-				(cam.viewportHeight / 2f) + 4, 0);
-		
-		// not sure if this call to update is really neccessary
+		// update() is required after every change to the camera
 		cam.update();
+		
+		player = new Player(cam);
+		
+		// setting player position, multiply by 32 in order to be on the position 15, 10 on the map
+		player.position.set(15 * 32, 10 * 32);
+		
+
 	}
 	
 	public void render() {
-		handleInput();
+		
+		// set the player position to project according to the camera rather than the window
+		player.getBatch().setProjectionMatrix(cam.combined);
+		
+		//check the scrolling
+		checkMapBorders();
+		
+		//update camera from checkMapBorders and any other changes that may have happened
 		cam.update();
-		batch.begin();
-		batch.setProjectionMatrix(cam.combined);
-		mapSprite.draw(batch);
-		batch.end();
+		tiledMapRenderer.setView(cam);
+		tiledMapRenderer.render();
+		player.render();
 	}
 
-    private void handleInput() {
-    	int input = InputHandler.getInput();
+    private void checkMapBorders() {
     	
-        if (input ==  InputHandler.LEFT) {
-            cam.translate(-translateSpeed, 0, 0);
-        }
-        if (input == InputHandler.RIGHT) {
-            cam.translate(translateSpeed, 0, 0);
-        }
-        if (input == InputHandler.DOWN) {
-            cam.translate(0, -translateSpeed, 0);
-        }
-        if (input == InputHandler.UP) {
-            cam.translate(0, translateSpeed, 0);
-        }
-
-    	effectiveViewportWidth = cam.viewportWidth * cam.zoom;
-        effectiveViewportHeight = cam.viewportHeight * cam.zoom;
-        
-        // boundaryClampValue represents the clamping of the camera to a certain 
-        // value where the camera will move in regards to the edge of the map
-        cam.position.x = MathUtils.clamp(cam.position.x, 
-        		effectiveViewportWidth / boundaryClampValue,
-        		99 - effectiveViewportWidth / boundaryClampValue);
-        
-        cam.position.y = MathUtils.clamp(cam.position.y, 
-        		effectiveViewportHeight / boundaryClampValue,
-        		99 - effectiveViewportHeight / boundaryClampValue);        	
+    	//get Tiled map properties
+    	int mapWidth = prop.get("width", Integer.class);
+    	int mapHeight = prop.get("height", Integer.class);
+    	int tilePixelWidth = prop.get("tilewidth", Integer.class);
+    	int tilePixelHeight = prop.get("tileheight", Integer.class);
+    	
+    	// 'width' and 'height' supply the amount of tiles in each row/column,
+    	// so you must multiply it by the tile width in order to get the map dimensions
+    	int mapPixelWidth = mapWidth * tilePixelWidth;
+    	int mapPixelHeight = mapHeight * tilePixelHeight;
+    	
+    	// determine when the camera will reach the ends of the map
+    	float viewportMinX = cam.viewportWidth / 2;
+    	float viewportMinY = cam.viewportHeight / 2;
+    	float viewportMaxX = mapPixelWidth - viewportMinX;
+    	float viewportMaxY = mapPixelHeight - viewportMinY;
+    	
+    	// preventing the camera from scrolling past the edge of the map
+    	if (player.position.x < viewportMinX && player.position.y < viewportMinY)
+    	{
+    		cam.position.x = viewportMinX;
+    		cam.position.y = viewportMinY;
+    	}else if(player.position.x > viewportMaxX && player.position.y > viewportMaxY)
+    	{
+    		cam.position.x = viewportMaxX;
+    		cam.position.y = viewportMaxY;
+    	}else if(player.position.x > viewportMaxX && player.position.y < viewportMinY)
+    	{
+    		cam.position.x = viewportMaxX;
+    		cam.position.y = viewportMinY;
+    	}else if(player.position.x < viewportMinX && player.position.y > viewportMaxY)
+    	{
+    		cam.position.x = viewportMinX;
+    		cam.position.y = viewportMaxY;
+    	}else if(player.position.x < viewportMinX)
+    	{
+    		cam.position.x = viewportMinX;
+    		cam.position.y = player.position.y;
+    	}else if(player.position.y < viewportMinY)
+    	{
+    		cam.position.y = viewportMinY;
+    		cam.position.x = player.position.x;
+    	}else if(player.position.x > viewportMaxX)
+    	{
+    		cam.position.x = viewportMaxX;
+    		cam.position.y = player.position.y;
+    	}else if(player.position.y > viewportMaxY)
+    	{
+    		cam.position.y = viewportMaxY;
+    		cam.position.x = player.position.x;
+    	}else{
+    		cam.position.x = player.position.x;
+    		cam.position.y = player.position.y;
+    	}
+    	
     }
     
     public static void dispose() {
-    	mapSprite.getTexture().dispose();
-    	batch.dispose();
     }
 }
