@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-
 /**
  * StateMachine helps the player class with directions and animations
  * @author adamfarmelo
