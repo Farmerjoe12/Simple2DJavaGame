@@ -22,9 +22,6 @@ public class PlayerGraphics extends Component implements GraphicsComponent
     	// 		of sprites, the top leftmost set is row 0, set 0 increasing
     	// 		down and to the right
     	createAnimSet(22, 0);
-    	
-    	// Set the animation facing up for initial game start
-        //currAnimation = getCurrentAnimation(input);
     }
 
     @Override
@@ -42,7 +39,6 @@ public class PlayerGraphics extends Component implements GraphicsComponent
         {
             batch.draw(animSet[lastDir].getLastFrame(),x, y, 32, 32);
         }
-
     }
 
     public Animator getCurrentAnimation(int input)
@@ -67,7 +63,5 @@ public class PlayerGraphics extends Component implements GraphicsComponent
 		animSet[1] = new Animator(spriteRow, startSprite+2, endSprite+2);	// DOWN
 		animSet[2] = new Animator(spriteRow, startSprite+4, endSprite+4);	// LEFT
 		animSet[3] = new Animator(spriteRow, startSprite+6, endSprite+6);	// RIGHT
-
-		
 	}
 }
