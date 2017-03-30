@@ -9,25 +9,23 @@ import com.mygdx.game.components.physicsComponent.Transform;
 /**
  * Created by Jacob on 3/29/2017.
  */
-public class Player extends Character
-{
-    public Player()
-    {
-        Transform transform = new Transform(0,0);
-        addComponent(transform);
-        addComponent(new PlayerGraphics());
-        addComponent(new PlayerInput());
-    }
-    @Override
-    public void draw(SpriteBatch b) {
-        b.setProjectionMatrix(MyGdxGame.simpleGame.getCamera().combined);
-        getComponent(PlayerGraphics.class).draw(b);
-    }
+public class Player extends Character {
+  public Player() {
+    Transform transform = new Transform(0, 0);
+    addComponent(transform);
+    addComponent(new PlayerGraphics());
+    addComponent(new PlayerInput());
+  }
 
-    @Override
-    public void tick()
-    {
-        getComponent(PlayerInput.class).handleInput();
-    }
+  @Override
+  public void draw(SpriteBatch b) {
+    b.setProjectionMatrix(MyGdxGame.simpleGame.getCamera().combined);
+    getComponent(PlayerGraphics.class).draw(b);
+  }
+
+  @Override
+  public void tick() {
+    getComponent(PlayerInput.class).handleInput();
+  }
 
 }

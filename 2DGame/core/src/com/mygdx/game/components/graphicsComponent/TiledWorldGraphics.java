@@ -6,15 +6,13 @@ import com.mygdx.game.components.Component;
 /**
  * Created by Jacob on 3/29/2017.
  */
-public class TiledWorldGraphics extends Component implements GraphicsComponent
-{
-    public TiledWorldGraphics()
-    {
+public class TiledWorldGraphics extends Component implements GraphicsComponent {
+  public TiledWorldGraphics() {
 
-    }
+  }
 
-    @Override
-    public void draw(SpriteBatch batch) {
+  @Override
+  public void draw(SpriteBatch batch) {
 
-    }
+  }
 }
