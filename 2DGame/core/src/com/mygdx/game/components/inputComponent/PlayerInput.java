@@ -12,7 +12,7 @@ public class PlayerInput extends Component implements InputComponent {
 
 	// @param deltaVal controls the amount that the player moves every frame
 	//		while recieving input
-	private float deltaVal = .5f;
+	private float deltaVal = 1f;
 	public static final int UP = 0;
 	public static final int DOWN = 1;
 	public static final int LEFT = 2;

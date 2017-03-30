@@ -27,7 +27,7 @@ public class Player extends Character
     @Override
     public void tick()
     {
-        getComponent(PlayerInput.class).handleInput();
+
     }
 
 }
