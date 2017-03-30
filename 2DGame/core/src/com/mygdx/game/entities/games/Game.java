@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.components.graphicsComponent.PlayerGraphics;
 import com.mygdx.game.components.physicsComponent.Transform;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.characters.Player;

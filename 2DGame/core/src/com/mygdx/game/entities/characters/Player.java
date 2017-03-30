@@ -1,7 +1,6 @@
 package com.mygdx.game.entities.characters;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.graphicsComponent.PlayerGraphics;
 import com.mygdx.game.components.inputComponent.PlayerInput;
@@ -28,7 +27,7 @@ public class Player extends Character
     @Override
     public void tick()
     {
-        getComponent(PlayerInput.class).handleInput(this);
+        getComponent(PlayerInput.class).handleInput();
     }
 
 }

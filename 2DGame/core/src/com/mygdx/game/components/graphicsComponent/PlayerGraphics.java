@@ -11,55 +11,63 @@ import com.mygdx.game.components.physicsComponent.Transform;
  */
 public class PlayerGraphics extends Component implements GraphicsComponent
 {
-    private Animator walkUP, walkDOWN, walkLEFT, walkRIGHT;
+	private Animator[] animSet;
     private Animator currAnimation = null;
+    private int input;
+    private int lastDir;
 
     public PlayerGraphics()
     {
-
-        walkUP = new Animator(0, 1);
-        walkDOWN = new Animator(2,3);
-        walkLEFT = new Animator(4,5);
-        walkRIGHT = new Animator(6,7);
-        currAnimation = walkDOWN;
+    	// createAnimSet takes parameters for row on the spritesheet and set
+    	// 		of sprites, the top leftmost set is row 0, set 0 increasing
+    	// 		down and to the right
+    	createAnimSet(22, 0);
+    	
+    	// Set the animation facing up for initial game start
+        //currAnimation = getCurrentAnimation(input);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
         float x = getParent().getComponent(Transform.class).getPosition().x;
         float y = getParent().getComponent(Transform.class).getPosition().y;
-        if(getParent().getComponent(PlayerInput.class).nothingPressed())
+        input = getParent().getComponent(PlayerInput.class).handleInput();
+        currAnimation = getCurrentAnimation(input);
+        
+        if(!(currAnimation == null))
         {
-            batch.draw(currAnimation.getLastFrame(),x, y, 32, 32);
+        	batch.draw(currAnimation.getCurrentTextureRegion(),x, y, 32, 32);
         }
         else
         {
-            batch.draw(currAnimation.getCurrentTextureRegion(),x, y, 32, 32);
+            batch.draw(animSet[lastDir].getLastFrame(),x, y, 32, 32);
         }
 
     }
 
-    public void setCurrentAnimation(int x)
+    public Animator getCurrentAnimation(int input)
     {
-        switch(x)
-        {
-            case 0:
-                currAnimation = walkUP;
-                break;
-            case 1:
-                currAnimation = walkDOWN;
-                break;
-            case 2:
-                currAnimation = walkLEFT;
-                break;
-            case 3:
-                currAnimation = walkRIGHT;
-                break;
-        }
+    	if (input >= 0) {
+    	lastDir = input;
+    	return animSet[input];
+    	} else return null;
     }
 
     public void updateSpritePositions()
     {
 
     }
+
+	public void createAnimSet(int spriteRow, int spriteSet) {
+		int startSprite = spriteSet*8;
+		int endSprite = startSprite+1;
+    	
+		animSet = new Animator[4];
+		animSet[0] = new Animator(spriteRow, startSprite, endSprite);		// UP
+		animSet[1] = new Animator(spriteRow, startSprite+2, endSprite+2);	// DOWN
+		animSet[2] = new Animator(spriteRow, startSprite+4, endSprite+4);	// LEFT
+		animSet[3] = new Animator(spriteRow, startSprite+6, endSprite+6);	// RIGHT
+
+		
+	}
 }

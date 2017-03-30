@@ -2,39 +2,47 @@ package com.mygdx.game.components.inputComponent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.components.Component;
-import com.mygdx.game.components.graphicsComponent.PlayerGraphics;
 import com.mygdx.game.components.physicsComponent.Transform;
-import com.mygdx.game.entities.characters.Player;
 
 /**
  * Created by Jacob on 3/29/2017.
  */
 public class PlayerInput extends Component implements InputComponent {
 
+	// @param deltaVal controls the amount that the player moves every frame
+	//		while recieving input
+	private float deltaVal = .5f;
+	public static final int UP = 0;
+	public static final int DOWN = 1;
+	public static final int LEFT = 2;
+	public static final int RIGHT = 3;
+	
+
     @Override
-    public void handleInput(Player p) {
+    public int handleInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.UP))
         {
-            getParent().getComponent(Transform.class).deltaY(1f);
-            getParent().getComponent(PlayerGraphics.class).setCurrentAnimation(0);
+            getParent().getComponent(Transform.class).deltaY(deltaVal);
+            return UP;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
         {
-            getParent().getComponent(Transform.class).deltaY(-1f);
-            getParent().getComponent(PlayerGraphics.class).setCurrentAnimation(1);
+            getParent().getComponent(Transform.class).deltaY(-deltaVal);
+            return DOWN;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
         {
-            getParent().getComponent(Transform.class).deltaX(-1f);
-            getParent().getComponent(PlayerGraphics.class).setCurrentAnimation(2);
+            getParent().getComponent(Transform.class).deltaX(-deltaVal);
+            return LEFT;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
         {
-            getParent().getComponent(Transform.class).deltaX(1f);
-            getParent().getComponent(PlayerGraphics.class).setCurrentAnimation(3);
+            getParent().getComponent(Transform.class).deltaX(deltaVal);
+            return RIGHT;
         }
+        
+        return -1;
     }
 
     public boolean nothingPressed()

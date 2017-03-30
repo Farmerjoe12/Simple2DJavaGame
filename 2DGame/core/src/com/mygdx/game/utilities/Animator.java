@@ -1,12 +1,10 @@
 package com.mygdx.game.utilities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 
 /** 
  * Animator is used to provide the animations for the sprites
@@ -28,7 +26,7 @@ public class Animator {
 	private float frameTime;
 	
 	
-	public Animator(int startSprite, int endSprite) {
+	public Animator(int row, int startSprite, int endSprite) {
 		
 		// frameTime controls the speed of the animation, lower is faster
 		frameTime = 0.2f;
@@ -45,8 +43,8 @@ public class Animator {
 		// by an animation
 		walkFrames = new TextureRegion[2];
 
-		walkFrames[0] = tmp[0][startSprite];
-		walkFrames[1] = tmp[0][endSprite];
+		walkFrames[0] = tmp[row][startSprite];
+		walkFrames[1] = tmp[row][endSprite];
 
 		walkAnimation = new Animation<TextureRegion>(frameTime, walkFrames);
 		

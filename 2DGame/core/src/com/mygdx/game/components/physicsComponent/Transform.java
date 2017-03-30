@@ -23,7 +23,20 @@ public class Transform extends Component
     {
         position = new Vector2(x,y);
     }
+    
+    // deltaX and deltaY are the actual movement methods called 
+    // 	from the input components
+    public void deltaX(float dx)
+    {
+        position.x += dx;
+    }
 
+    public void deltaY(float dy)
+    {
+        position.y += dy;
+    }
+
+    // Getters and setters
     public float getRotation() {
         return rotation;
     }
@@ -63,15 +76,4 @@ public class Transform extends Component
     public void setAcceleration(Vector2 acceleration) {
         this.acceleration = acceleration;
     }
-
-    public void deltaX(float dx)
-    {
-        position.x += dx;
-    }
-
-    public void deltaY(float dy)
-    {
-        position.y += dy;
-    }
-
 }
