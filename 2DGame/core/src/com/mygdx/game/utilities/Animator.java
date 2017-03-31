@@ -19,7 +19,6 @@ public class Animator {
   private static final int FRAME_COLS = 32, FRAME_ROWS = 23;
 
   private Animation<TextureRegion> walkAnimation;
-  private TextureRegion currentFrame;
   private TextureRegion[] walkFrames;
   private static Texture walkSheet;
   private static SpriteBatch spriteBatch;
@@ -54,8 +53,8 @@ public class Animator {
 
   public TextureRegion getCurrentTextureRegion() {
     stateTime += Gdx.graphics.getDeltaTime();
-    currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-    return currentFrame;
+    
+    return walkAnimation.getKeyFrame(stateTime, true);
   }
 
   public static void dispose() {
@@ -66,5 +65,4 @@ public class Animator {
   public TextureRegion getLastFrame() {
     return walkFrames[1];
   }
-
 }
