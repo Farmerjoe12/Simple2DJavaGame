@@ -38,7 +38,7 @@ public class Collide extends Component{
 	    	return 0f;
 	    }
 	    
-	    if (position.y < 0 || position.y + 32f > mapPixelHeight)
+	    if (position.y < 0)
 	    {
 	    	position.y = 0f;
 	    	return 0f;
