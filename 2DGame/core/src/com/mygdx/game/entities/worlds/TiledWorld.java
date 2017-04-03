@@ -14,7 +14,7 @@ import com.mygdx.game.MyGdxGame;
 public class TiledWorld extends World {
   TiledMap tiledMap;
   TiledMapRenderer tiledMapRenderer;
-  MapProperties prop;
+  public MapProperties prop;
 
   public TiledWorld() {
     // loading in Tiled map, initializing the renderer

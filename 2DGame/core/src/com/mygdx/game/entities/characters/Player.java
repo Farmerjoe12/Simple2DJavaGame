@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.graphicsComponent.PlayerGraphics;
 import com.mygdx.game.components.inputComponent.PlayerInput;
+import com.mygdx.game.components.physicsComponent.Collide;
 import com.mygdx.game.components.physicsComponent.Transform;
 
 /**
@@ -15,6 +16,7 @@ public class Player extends Character {
     addComponent(transform);
     addComponent(new PlayerGraphics());
     addComponent(new PlayerInput());
+    addComponent(new Collide());
   }
 
   @Override
