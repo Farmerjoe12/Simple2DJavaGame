@@ -13,7 +13,7 @@ public class PlayerInput extends Component implements InputComponent {
 
   // @param deltaVal controls the amount that the player moves every frame
   // while recieving input
-  private float deltaVal = 1f; //getParent().getComponent(Collide.class).checkMapBounds();
+  private float deltaVal = 1f; //getParent().getComponent(Collide.class).checkCollisions(); 
   public static final int UP = 0;
   public static final int DOWN = 1;
   public static final int LEFT = 2;
@@ -22,19 +22,19 @@ public class PlayerInput extends Component implements InputComponent {
   @Override
   public int handleInput() {
     if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-      getParent().getComponent(Transform.class).deltaY(getParent().getComponent(Collide.class).checkMapBounds());
+      getParent().getComponent(Transform.class).deltaY(getParent().getComponent(Collide.class).checkCollisions());
       return UP;
     }
     if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-      getParent().getComponent(Transform.class).deltaY(-(getParent().getComponent(Collide.class).checkMapBounds()));
+      getParent().getComponent(Transform.class).deltaY(-(getParent().getComponent(Collide.class).checkCollisions()));
       return DOWN;
     }
     if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-      getParent().getComponent(Transform.class).deltaX(-(getParent().getComponent(Collide.class).checkMapBounds()));
+      getParent().getComponent(Transform.class).deltaX(-(getParent().getComponent(Collide.class).checkCollisions()));
       return LEFT;
     }
     if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-      getParent().getComponent(Transform.class).deltaX(getParent().getComponent(Collide.class).checkMapBounds());
+      getParent().getComponent(Transform.class).deltaX(getParent().getComponent(Collide.class).checkCollisions());
       return RIGHT;
     }
 

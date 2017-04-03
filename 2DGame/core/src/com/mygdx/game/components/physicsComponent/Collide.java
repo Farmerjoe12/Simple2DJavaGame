@@ -2,22 +2,30 @@ package com.mygdx.game.components.physicsComponent;
 
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2D;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.Component;
+import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.characters.Player;
 import com.mygdx.game.entities.worlds.TiledWorld;
 
 public class Collide extends Component{
-	public Box2D boundBox;
-	Vector2 position = new Vector2(0, 0);
+	Rectangle rect, collidableRect;
+	Vector2 position, collidablePosition;
+	TiledMap tiledMap;
 	MapProperties prop = new MapProperties();
 	
-	public float checkMapBounds()
+	public float checkCollisions()
 	{
 		position = getParent().getComponent(Transform.class).position;
-		prop = MyGdxGame.simpleGame.getChild(TiledWorld.class).prop;
+		tiledMap = MyGdxGame.simpleGame.getChild(TiledWorld.class).tiledMap;
+		prop = tiledMap.getProperties();
 
 	    int mapWidth = prop.get("width", Integer.class);
 	    int mapHeight = prop.get("height", Integer.class);
@@ -40,14 +48,34 @@ public class Collide extends Component{
 	    
 	    if (position.y < 0)
 	    {
-	    	position.y = 0f;
+	    	position.y = 0;
 	    	return 0f;
 	    } else if (position.y + 32 > mapPixelHeight) {
 	    	position.x = mapPixelHeight - 32;
 	    	return 0f;
 	    }
-		
+	    
+	    if (isCollision())
+	    	return 0f;
 		
 		return 1f;
+	}
+	
+	public boolean isCollision()
+	{
+		position = getParent().getComponent(Transform.class).position;
+		TiledMapTileLayer collidableLayer = (TiledMapTileLayer)tiledMap.getLayers().get("collidable");
+		
+		if (collidableLayer.getCell((int)position.x, (int)position.y) != null)
+			return true;
+		if (collidableLayer.getCell((int)position.x + 32, (int)position.y) != null)
+			return true;
+		if (collidableLayer.getCell((int)position.x, (int)position.y + 32) != null)
+			return true;
+		if (collidableLayer.getCell((int)position.x + 32, (int)position.y + 32) != null)
+			return true;
+		
+		return false;
+		
 	}
 }
