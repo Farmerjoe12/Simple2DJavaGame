@@ -72,17 +72,7 @@ public class Collide extends Component{
 	    // position. this should be called by the playerInput class to check if 
 	    // the next cell is blocked or not
 	    if (isBlocked(position.x + 32, position.y + 32))
-	    {
-	    	if (facing == 0)
-	    		position.y -= 1f;
-	    	if (facing == 1)
-	    		position.y += 1f;
-	    	if (facing == 2)
-	    		position.x += 1f;
-	    	if (facing == 3)
-	    		position.x -= 1f;
-	    	
-	    	
+	    {		    	
 	    	return true;
 	    }
 
@@ -124,7 +114,7 @@ public class Collide extends Component{
 				blocked = true;
 			}
 		}*/
-	
+		
 		// Checking corners of the sprite
 		// Bottom left
 		if (collidableLayer.getCell((int)(position.x/32), (int)(position.y/32)) != null)
