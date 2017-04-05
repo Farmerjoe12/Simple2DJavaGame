@@ -124,13 +124,18 @@ public class Collide extends Component{
 				blocked = true;
 			}
 		}*/
-		
+	
+		// Checking corners of the sprite
+		// Bottom left
 		if (collidableLayer.getCell((int)(position.x/32), (int)(position.y/32)) != null)
  			return true;
+		// Bottom right
  		if (collidableLayer.getCell((int)((position.x + 32)/32), (int)(position.y/32)) != null)
  			return true;
+ 		// Top left
  		if (collidableLayer.getCell((int)(position.x/32), (int)((position.y + 32)/32)) != null)
  			return true;
+ 		// Top right
  		if (collidableLayer.getCell((int)((position.x + 32)/32), (int)((position.y + 32)/32)) != null)
  			return true;
 		
