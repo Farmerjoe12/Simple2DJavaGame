@@ -9,7 +9,7 @@ import com.mygdx.game.components.Component;
 public class Transform extends Component {
   public float rotation = 0f;
   public float scale = 1f;
-  Vector2 position = new Vector2(0, 0);
+  Vector2 position = new Vector2();
   Vector2 velocity = new Vector2(0, 0);
   Vector2 acceleration = new Vector2(0, 0);
 

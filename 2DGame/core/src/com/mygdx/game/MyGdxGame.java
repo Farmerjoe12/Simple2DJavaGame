@@ -34,7 +34,7 @@ public class MyGdxGame extends ApplicationAdapter {
     simpleGame = new Simple2DJavaGame();
 
     Player player = new Player();
-    player.getComponent(Transform.class).setPosition(new Vector2(100f, 100f));
+    player.getComponent(Transform.class).setPosition(new Vector2(1000f, 1000f));
 
     simpleGame.addChild(player);
     simpleGame.addChild(new TiledWorld());

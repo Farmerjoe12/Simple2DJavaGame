@@ -4,17 +4,21 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.Component;
-import com.mygdx.game.entities.Entity;
-import com.mygdx.game.entities.characters.Player;
 import com.mygdx.game.entities.worlds.TiledWorld;
 
+/**
+ * 
+ * Ideally this component should be implemented by the worldMap entity. Then,
+ * within handleInput() of PlayerInput before transform is called, the Collide
+ * compponent should be called and utilized so that the player's position is not updated
+ * until the tile in the desired direction of travel is verified to be clear 
+ * @author adamfarmelo
+ *
+ */
 public class Collide extends Component{
 	Rectangle rect, collidableRect;
 	Vector2 position, collidablePosition;
@@ -37,45 +41,72 @@ public class Collide extends Component{
 	    int mapPixelWidth = mapWidth * tilePixelWidth;
 	    int mapPixelHeight = mapHeight * tilePixelHeight;
 	    
-	    if (position.x < 0)
+	    float delta = 1f;
+	    float x = position.x;
+	    float y = position.y;
+	    
+	    // Checking map x boundaries
+	    if (x < 0)
 	    {
 	    	position.x = 0f;
 	    	return 0f;
-	    } else if (position.x + 32 > mapPixelWidth) {
+	    } else if (x + 32 > mapPixelWidth) {
 	    	position.x = mapPixelWidth - 32;
 	    	return 0f;
 	    }
-	    
-	    if (position.y < 0)
+	    // Checking map y boundaries
+	    if (y < 0)
 	    {
-	    	position.y = 0;
+	    	position.y = 0f;
 	    	return 0f;
-	    } else if (position.y + 32 > mapPixelHeight) {
+	    } else if (y + 32 > mapPixelHeight) {
 	    	position.x = mapPixelHeight - 32;
 	    	return 0f;
 	    }
-	    
-	    if (isCollision())
+	     
+	    // Collision detection currently is only checking the players current
+	    // position. this should be called by the playerInput class to check if 
+	    // the next cell is blocked or not
+	    if (isBlocked(position.x, position.y))
 	    	return 0f;
 		
-		return 1f;
+		return delta;
 	}
 	
-	public boolean isCollision()
+	/** isBlocked() is based on the individual properties of the tiles within the cells of 
+	 * the tiledMap 
+	 * 
+	 */
+	public boolean isBlocked(float nextX, float nextY)
 	{
-		position = getParent().getComponent(Transform.class).position;
+		/** if the player is attempting to move into a blocked cell, the player
+		 * should not be able to move
+		 */
+		Cell cell = null;
+		boolean blocked = false;
+		
+		// TMTL is storing the collidable layer from 2.tmx
 		TiledMapTileLayer collidableLayer = (TiledMapTileLayer)tiledMap.getLayers().get("collidable");
 		
-		if (collidableLayer.getCell((int)position.x, (int)position.y) != null)
-			return true;
-		if (collidableLayer.getCell((int)position.x + 32, (int)position.y) != null)
-			return true;
-		if (collidableLayer.getCell((int)position.x, (int)position.y + 32) != null)
-			return true;
-		if (collidableLayer.getCell((int)position.x + 32, (int)position.y + 32) != null)
-			return true;
+		try 
+		{
+			// getCell is returning the cell specified by the param nextX and nextY
+			// where each param is divided by 32 in order to get cell rows and cols
+			cell = collidableLayer.getCell((int) (nextX/32), (int) (nextY/32));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		return false;
+		// here if the cell returned by getCell and the corresponding tile aren't null,
+		// then the tile properties from the cell are searched for the key "blocked"
+		// if the key is found, the cell is not traversable
+		if (cell!= null && cell.getTile() != null)
+		{
+			if (cell.getTile().getProperties().containsKey("blocked")) {
+				blocked = true;
+			}
+		}
 		
+		return blocked;
 	}
 }

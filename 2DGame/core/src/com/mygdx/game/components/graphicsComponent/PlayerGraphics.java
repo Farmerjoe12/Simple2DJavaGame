@@ -34,6 +34,10 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
     } else {
       batch.draw(animSet[lastDir].getLastFrame(), x, y, 32, 32);
     }
+    
+    if (PlayerInput.nothingPressed) {
+    		System.out.println("X: " + x + " Y: " + y);
+    }
   }
 
   public Animator getCurrentAnimation(int input) {
