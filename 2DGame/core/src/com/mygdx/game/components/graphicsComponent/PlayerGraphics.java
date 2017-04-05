@@ -35,7 +35,10 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
     // Left = 2
     // Right = 3
     
-    move(input);
+    if (!getParent().getComponent(Collide.class).isBlocked(input))
+    {
+    	move(input);
+    }
     
     currAnimation = getCurrentAnimation(input);
 
