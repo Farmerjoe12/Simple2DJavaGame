@@ -1,10 +1,10 @@
 package com.mygdx.game.components.inputComponent;
 
 import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.Input;
 import com.mygdx.game.components.Component;
-import com.mygdx.game.components.physicsComponent.Collide;
-import com.mygdx.game.components.physicsComponent.Transform;
+
 
 /**
  * Created by Jacob on 3/29/2017.
@@ -13,7 +13,6 @@ public class PlayerInput extends Component implements InputComponent {
 
   // @param deltaVal controls the amount that the player moves every frame
   // while recieving input
-  private float deltaVal = 1f; //getParent().getComponent(Collide.class).checkCollisions(); 
   public static final int UP = 0;
   public static final int DOWN = 1;
   public static final int LEFT = 2;

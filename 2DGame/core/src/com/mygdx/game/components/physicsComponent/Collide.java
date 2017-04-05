@@ -47,6 +47,19 @@ public class Collide extends Component{
 	    int mapPixelWidth = mapWidth * tilePixelWidth;
 	    int mapPixelHeight = mapHeight * tilePixelHeight;
 	    
+	    float x = position.x;
+	    float y = position.y;
+	    
+	    if (facing == 0)
+	    	y += 33;
+	    if (facing == 1)
+	    	y -= 1;
+	    if (facing == 2)
+	    	x -= 1;
+	    if (facing == 3)
+	    	x += 33;
+	    
+	    
 		/** if the player is attempting to move into a blocked cell, the player
 		 * should not be able to move
 		 */
@@ -56,24 +69,24 @@ public class Collide extends Component{
 		TiledMapTileLayer collidableLayer = (TiledMapTileLayer)tiledMap.getLayers().get("collidable");
 		
 		// Checks the cell that each corner pixel of the player is in
-		boolean bottomLeft = collidableLayer.getCell((int)((position.x - 1)/32), (int)((position.y - 1)/32)) != null,
-				bottomRight = collidableLayer.getCell((int)((position.x + 33)/32), (int)((position.y - 1)/32)) != null,
-				topLeft = collidableLayer.getCell((int)((position.x - 1)/32), (int)((position.y + 33)/32)) != null,
-				topRight = collidableLayer.getCell((int)((position.x + 33)/32), (int)((position.y + 33)/32)) != null;
+		boolean bottomLeft = collidableLayer.getCell((int)(x/32), (int)(y/32)) != null,
+				bottomRight = collidableLayer.getCell((int)(x/32), (int)(y/32)) != null,
+				topLeft = collidableLayer.getCell((int)(x/32), (int)(y/32)) != null,
+				topRight = collidableLayer.getCell((int)(x/32), (int)(y/32)) != null;
 		
 		switch (facing) {
 		
 		// If facing up, checks top left and right pixels for collision and also top map bounds
-		case 0: return (topLeft && topRight) || position.y + 32 > mapPixelHeight;
+		case 0: return ((topLeft || topRight) ) || position.y + 32 > mapPixelHeight;
 		
 		// If facing down, checks bottom left and right pixels for collision and also bottom map bounds
-		case 1: return (bottomLeft && bottomRight) || position.y < 0;
+		case 1: return ((bottomLeft) || (bottomRight)) || position.y < 0;
 		
 		// If facing left, checks bottom and top left pixels for collision and also left map bounds
-		case 2: return (bottomLeft && topLeft) || position.x < 0;
+		case 2: return ((bottomLeft) || (topLeft)) || position.x < 0;
 		
 		// If facing right, checks bottom and top right pixels for collision and also right map bounds
-		case 3: return (bottomRight && topRight) || position.x + 32 > mapPixelWidth;
+		case 3: return ((bottomRight) || (topRight)) || position.x + 32 > mapPixelWidth;
 		
 		default: break;
 		}
