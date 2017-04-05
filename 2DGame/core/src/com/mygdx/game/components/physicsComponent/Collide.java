@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.Component;
+import com.mygdx.game.components.graphicsComponent.PlayerGraphics;
 import com.mygdx.game.entities.worlds.TiledWorld;
 
 /**
@@ -24,8 +25,9 @@ public class Collide extends Component{
 	Vector2 position, collidablePosition;
 	TiledMap tiledMap;
 	MapProperties prop = new MapProperties();
+	int facing = 0;
 	
-	public float checkCollisions()
+	public boolean checkCollisions()
 	{
 		position = getParent().getComponent(Transform.class).position;
 		tiledMap = MyGdxGame.simpleGame.getChild(TiledWorld.class).tiledMap;
@@ -48,29 +50,44 @@ public class Collide extends Component{
 	    // Checking map x boundaries
 	    if (x < 0)
 	    {
-	    	position.x = 0f;
-	    	return 0f;
+	    	return true;
 	    } else if (x + 32 > mapPixelWidth) {
-	    	position.x = mapPixelWidth - 32;
-	    	return 0f;
+	    	return true;
 	    }
 	    // Checking map y boundaries
 	    if (y < 0)
 	    {
-	    	position.y = 0f;
-	    	return 0f;
+	    	return true;
 	    } else if (y + 32 > mapPixelHeight) {
-	    	position.x = mapPixelHeight - 32;
-	    	return 0f;
+	    	return true;
 	    }
+	    
+	    facing = getParent().getComponent(PlayerGraphics.class).getInput();
+	    //UP = 0
+	    //DOWN = 1
+	    //LEFT = 2
+	    //RIGHT = 3
 	     
 	    // Collision detection currently is only checking the players current
 	    // position. this should be called by the playerInput class to check if 
 	    // the next cell is blocked or not
-	    if (isBlocked(position.x, position.y))
-	    	return 0f;
+	    if (isBlocked(position.x + 32, position.y + 32))
+	    {
+	    	if (facing == 0)
+	    		position.y -= 1f;
+	    	if (facing == 1)
+	    		position.y += 1f;
+	    	if (facing == 2)
+	    		position.x += 1f;
+	    	if (facing == 3)
+	    		position.x -= 1f;
+	    	
+	    	
+	    	return true;
+	    }
+
 		
-		return delta;
+		return false;
 	}
 	
 	/** isBlocked() is based on the individual properties of the tiles within the cells of 
@@ -88,6 +105,7 @@ public class Collide extends Component{
 		// TMTL is storing the collidable layer from 2.tmx
 		TiledMapTileLayer collidableLayer = (TiledMapTileLayer)tiledMap.getLayers().get("collidable");
 		
+		/* 
 		try 
 		{
 			// getCell is returning the cell specified by the param nextX and nextY
@@ -96,16 +114,25 @@ public class Collide extends Component{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		*/
 		// here if the cell returned by getCell and the corresponding tile aren't null,
 		// then the tile properties from the cell are searched for the key "blocked"
 		// if the key is found, the cell is not traversable
-		if (cell!= null && cell.getTile() != null)
+		/*if (cell!= null && cell.getTile() != null)
 		{
 			if (cell.getTile().getProperties().containsKey("blocked")) {
 				blocked = true;
 			}
-		}
+		}*/
+		
+		if (collidableLayer.getCell((int)(position.x/32), (int)(position.y/32)) != null)
+ 			return true;
+ 		if (collidableLayer.getCell((int)((position.x + 32)/32), (int)(position.y/32)) != null)
+ 			return true;
+ 		if (collidableLayer.getCell((int)(position.x/32), (int)((position.y + 32)/32)) != null)
+ 			return true;
+ 		if (collidableLayer.getCell((int)((position.x + 32)/32), (int)((position.y + 32)/32)) != null)
+ 			return true;
 		
 		return blocked;
 	}

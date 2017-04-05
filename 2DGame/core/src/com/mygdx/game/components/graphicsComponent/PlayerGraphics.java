@@ -58,4 +58,12 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
     animSet[2] = new Animator(spriteRow, startSprite + 4, endSprite + 4); // LEFT
     animSet[3] = new Animator(spriteRow, startSprite + 6, endSprite + 6); // RIGHT
   }
+
+public int getInput() {
+	return input;
+}
+
+public void setInput(int input) {
+	this.input = input;
+}
 }

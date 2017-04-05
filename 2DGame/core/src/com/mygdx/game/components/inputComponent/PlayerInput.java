@@ -23,22 +23,18 @@ public class PlayerInput extends Component implements InputComponent {
   @Override
   public int handleInput() {
     if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-      getParent().getComponent(Transform.class).deltaY(getParent().getComponent(Collide.class).checkCollisions());
       nothingPressed = false;
       return UP;
     }
     if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-      getParent().getComponent(Transform.class).deltaY(-getParent().getComponent(Collide.class).checkCollisions());
       nothingPressed = false;
       return DOWN;
     }
     if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-      getParent().getComponent(Transform.class).deltaX(-getParent().getComponent(Collide.class).checkCollisions());
       nothingPressed = false;
       return LEFT;
     }
     if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-      getParent().getComponent(Transform.class).deltaX(getParent().getComponent(Collide.class).checkCollisions());
       nothingPressed = false;
       return RIGHT;
     }
