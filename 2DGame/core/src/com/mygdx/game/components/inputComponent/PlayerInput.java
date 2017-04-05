@@ -46,20 +46,4 @@ public class PlayerInput extends Component implements InputComponent {
     nothingPressed = true;
     return -1;
   }
-
-  public boolean nothingPressed() {
-    if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-      return false;
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-      return false;
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-      return false;
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-      return false;
-    }
-    return true;
-  }
 }
