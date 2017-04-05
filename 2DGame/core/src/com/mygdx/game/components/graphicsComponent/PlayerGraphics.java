@@ -34,6 +34,7 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
     } else {
       batch.draw(animSet[lastDir].getLastFrame(), x, y, 32, 32);
     }
+
   }
 
   public Animator getCurrentAnimation(int input) {
@@ -53,9 +54,18 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
     int endSprite = startSprite + 1;
 
     animSet = new Animator[4];
-    animSet[0] = new Animator(spriteRow, startSprite, endSprite); // UP
+    animSet[0] = new Animator(spriteRow, startSprite, endSprite);
     animSet[1] = new Animator(spriteRow, startSprite + 2, endSprite + 2); // DOWN
     animSet[2] = new Animator(spriteRow, startSprite + 4, endSprite + 4); // LEFT
     animSet[3] = new Animator(spriteRow, startSprite + 6, endSprite + 6); // RIGHT
+  }
+
+  public int getCurrentCol()
+  {
+    if (!(currAnimation == null)) {
+      return currAnimation.getColumn();
+    } else {
+      return animSet[lastDir].getColumn();
+    }
   }
 }

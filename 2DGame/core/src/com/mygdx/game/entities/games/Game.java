@@ -36,8 +36,8 @@ public abstract class Game extends Entity {
 
   }
 
-  private void checkMapBorders() {
-    Player player = MyGdxGame.simpleGame.getChild(Player.class);
+  protected void checkMapBorders() {
+    Player player = MyGdxGame.currentGame.getChild(Player.class);
     MapProperties prop = getChild(TiledWorld.class).getProp();
     // get Tiled map properties
     int mapWidth = prop.get("width", Integer.class);

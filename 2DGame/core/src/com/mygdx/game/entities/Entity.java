@@ -4,11 +4,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.components.Component;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by Jacob on 3/29/2017.
  */
 public abstract class Entity {
+  private int id = (int)(Math.random()*Integer.MAX_VALUE);
   private final int MAX_COMPONENTS = 10;
   private ArrayList<Component> components = new ArrayList<Component>();
   private ArrayList<Entity> children = new ArrayList<Entity>();
@@ -81,4 +83,13 @@ public abstract class Entity {
   public void removeChild(Entity e) {
     children.remove(e);
   }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
 }
