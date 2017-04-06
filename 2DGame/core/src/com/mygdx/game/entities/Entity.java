@@ -20,6 +20,7 @@ public abstract class Entity {
 
   public abstract void draw(SpriteBatch b);
 
+  @SuppressWarnings("unchecked")
   public <T extends Component> T getComponent(Class<T> toGet) {
     for (Component c : components) {
       if (toGet.isInstance(c)) {
@@ -30,7 +31,9 @@ public abstract class Entity {
     return (T) new Component() {};
   }
 
+  @SuppressWarnings("unchecked")
   public <T extends Entity> T getChild(Class<T> toGet) {
+
     for (Entity e : children) {
       if (toGet.isInstance(e)) {
         return toGet.cast(e);
