@@ -48,9 +48,9 @@ public class Collide extends Component{
 	     * values are needed for the other three corners
 	     */
 	    float baseX = position.x;
-	    float baseY = position.y;
+	    float baseY = position.y + 16;
 	    float adjX = position.x + 32;
-	    float adjY = position.y + 32;
+	    float adjY = position.y + 16;
 	    
 		// TMTL is storing the collidable layer from 2.tmx
 		TiledMapTileLayer collidableLayer = (TiledMapTileLayer)tiledMap.getLayers().get("collidable");

@@ -31,7 +31,7 @@ public class Animator {
     // frameTime controls the speed of the animation, lower is faster
     frameTime = 0.2f;
 
-    walkSheet = new Texture(Gdx.files.internal("assets/lastguardian_all.png"));
+    walkSheet = new Texture(Gdx.files.internal("lastguardian_all.png"));
 
     // this array is populated with individual indexes of sprites from the
     // sprite sheet to make them easily accessible
