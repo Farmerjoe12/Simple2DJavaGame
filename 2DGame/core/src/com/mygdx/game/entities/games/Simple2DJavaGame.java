@@ -19,10 +19,11 @@ public class Simple2DJavaGame extends Game
     public void draw(SpriteBatch batch)
     {
         batch.setProjectionMatrix(getCamera().combined);
-        getChild(TiledWorld.class).draw(batch);
+        getChild(TiledWorld.class).drawBackground(batch);
         batch.begin();
         getChild(Player.class).draw(batch);
         batch.end();
+        getChild(TiledWorld.class).drawForeground(batch);
     }
 
 
