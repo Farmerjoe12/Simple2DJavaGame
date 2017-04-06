@@ -29,6 +29,11 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
     input = getParent().getComponent(PlayerInput.class).handleInput();
     float x = getParent().getComponent(Transform.class).getPosition().x;
     float y = getParent().getComponent(Transform.class).getPosition().y;
+    //facing == input
+    // Up = 0
+    // Down = 1
+    // Left = 2
+    // Right = 3
     
     if (!getParent().getComponent(Collide.class).isBlocked(input))
     {
@@ -46,6 +51,11 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
   
   public void move(int input)
   {
+	  
+	  float x = getParent().getComponent(Transform.class).getPosition().x;
+	  float y = getParent().getComponent(Transform.class).getPosition().y;
+	  
+	  
 	  switch (input) {
 	  case 0: getParent().getComponent(Transform.class).deltaY(delta);
 	  break;
