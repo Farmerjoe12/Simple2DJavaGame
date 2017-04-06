@@ -48,7 +48,7 @@ public class Collide extends Component{
 	     * values are needed for the other three corners
 	     */
 	    float baseX = position.x;
-	    float baseY = position.y + 16;
+	    float baseY = position.y;
 	    float adjX = position.x + 32;
 	    float adjY = position.y + 16;
 	    

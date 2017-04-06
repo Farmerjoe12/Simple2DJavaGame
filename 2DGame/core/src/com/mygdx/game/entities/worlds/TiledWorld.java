@@ -16,8 +16,8 @@ public class TiledWorld extends World {
   TiledMapRenderer tiledMapRenderer;
   public MapProperties prop;
 
-  int[] backgroundLayers = {0};
-  int[] foregroundLayers = {1};
+  int[] backgroundLayers = {0, 1};
+  int[] foregroundLayers = {2};
 
   public TiledWorld() {
     // loading in Tiled map, initializing the renderer
