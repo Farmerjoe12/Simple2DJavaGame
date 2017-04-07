@@ -11,7 +11,7 @@ import com.mygdx.game.MyGdxGame;
  * Created by Jacob on 3/29/2017.
  */
 public class TiledWorld extends World {
-  TiledMap tiledMap;
+  public TiledMap tiledMap;
   TiledMapRenderer tiledMapRenderer;
   MapProperties prop;
 

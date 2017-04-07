@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Client;
 import com.mygdx.game.components.graphicsComponent.PlayerGraphics;
+import com.mygdx.game.components.inputComponent.MultiplayerInput;
 import com.mygdx.game.components.inputComponent.PlayerInput;
 import com.mygdx.game.entities.characters.Player;
 import com.mygdx.game.entities.games.Game;
@@ -22,6 +23,7 @@ import com.mygdx.game.entities.games.Simple2DJavaGameMultiplayer;
 import com.mygdx.game.entities.games.Simple2DJavaGameSingleplayer;
 import com.mygdx.game.components.physicsComponent.Transform;
 import com.mygdx.game.entities.worlds.TiledWorld;
+import com.mygdx.game.utilities.ButtonListener;
 import com.mygdx.server.KryonetServer;
 import java.io.IOException;
 
@@ -34,8 +36,9 @@ import java.io.IOException;
  */
 public class MyGdxGame extends ApplicationAdapter {
 
+  public static ButtonListener listener = new ButtonListener();
   static AssetManager assetManager = new AssetManager();
-  public static Simple2DJavaGameSingleplayer simple2DJavaGameSingleplayer;
+ // public static Simple2DJavaGameSingleplayer simple2DJavaGameSingleplayer;
   public static Simple2DJavaGameMultiplayer simple2DJavaGameMultiplayer;
   public static Game currentGame;
   SpriteBatch batch;
@@ -44,19 +47,7 @@ public class MyGdxGame extends ApplicationAdapter {
   @Override
   public void create() {
     loadAssets();
-    final KryonetServer server = new KryonetServer();
-    try {
-      new Thread(new Runnable() {
-        public void run() {
-          while (true) {
-            server.tick();
-          }
-        }
-      });
-    }catch(Exception e){
-      System.out.println("disposing");
-      server.dispose();
-    }
+
     batch = new SpriteBatch();
 
     float w = Gdx.graphics.getWidth();
@@ -71,6 +62,10 @@ public class MyGdxGame extends ApplicationAdapter {
     cam.position.set(0, 0, 0);
     currentGame.setCamera(cam);
     cam.update();
+
+    Gdx.input.setInputProcessor(listener);
+
+    simple2DJavaGameMultiplayer.addComponent(new MultiplayerInput());
   }
 
   @Override

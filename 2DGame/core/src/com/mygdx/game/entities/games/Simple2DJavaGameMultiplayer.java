@@ -10,11 +10,9 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.KryoSerialization;
 import com.esotericsoftware.kryonet.Listener;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.components.graphicsComponent.PlayerGraphics;
-import com.mygdx.game.components.inputComponent.PlayerInput;
-import com.mygdx.game.components.physicsComponent.Transform;
-import com.mygdx.game.entities.characters.Player;
+import com.mygdx.game.components.inputComponent.MultiplayerInput;
 import com.mygdx.game.entities.worlds.TiledWorld;
+import com.mygdx.server.KryonetServer;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -22,20 +20,16 @@ import java.util.ArrayList;
  * Created by Jacob on 4/3/2017.
  */
 public class Simple2DJavaGameMultiplayer extends Game {
+
   Client client;
   ArrayList<String[]> drawables = new ArrayList<String[]>();
 
-  int id = getId();
-  String[] player = new String[]{
-      "",
-      id+"",
-      "",
-      "",
-      "",
-      "",
-      "",
-  };
+
+  int clientID;
+  String[] player;
+
   public Simple2DJavaGameMultiplayer() {
+    new KryonetServer();
     TiledWorld tiledWorld = new TiledWorld();
     addChild(tiledWorld);
 
@@ -47,31 +41,25 @@ public class Simple2DJavaGameMultiplayer extends Game {
     client.start();
     try {
       client.connect(5000, "127.0.0.1", 54555, 54777);
-      id = client.getID();
-      client.sendTCP(new Integer(id));
+      clientID = client.getID();
     } catch (IOException e) {
       e.printStackTrace();
     }
+
 
     client.addListener(new Listener() {
       public void received (Connection connection, Object object) {
         if (object instanceof String[]) {
           String[] in = (String[])object;
-          System.out.println("got message:");
+          System.out.println("client got message:");
           for(int i = 0; i < in.length; i++) {
             System.out.println("\t"+in[i]);
           }
           if(in[0].equals("drawable")) {
-            /*String id = in[1];
-            String texture = in[2];
-            float x = Float.parseFloat(in[3]);
-            float y = Float.parseFloat(in[4]);
-            int row = Integer.parseInt(in[5]);
-            int col = Integer.parseInt(in[6]);
-            */
-
-            //System.out.println(getId().toString());
             addDrawable(in);
+            if(Integer.parseInt(in[1]) == client.getID()){
+              player = in;
+            }
           }
         }
       }
@@ -81,9 +69,17 @@ public class Simple2DJavaGameMultiplayer extends Game {
     kryo.register(String[].class);
     kryo.register(String.class);
     kryo.register(Integer.class);
+
+  }
+
+  public Client getClient() {
+    return client;
   }
 
   public void addDrawable(String[] toAdd) {
+    if(Integer.parseInt(toAdd[1]) == clientID){
+      player = toAdd;
+    }
     boolean contained = false;
     for(String[] s : drawables) {
       if(s[1].equals(toAdd[1])) {
@@ -105,9 +101,11 @@ public class Simple2DJavaGameMultiplayer extends Game {
   public void updateCamera() {
     float x = Float.parseFloat(player[3]) + 16;
     float y = Float.parseFloat(player[4]) + 16;
+    System.out.println(x+","+y);
     getCamera().position.set(x, y, 0);
     checkMapBorders();
     getCamera().update();
+    System.out.println(getCamera().position.x+","+ getCamera().position.y);
   }
 
   public void dispose() {
@@ -160,37 +158,34 @@ public class Simple2DJavaGameMultiplayer extends Game {
   }
 
   public void tick() {
-    resetPlayer();
-    updateCamera();
+    getComponent(MultiplayerInput.class).handleInput();
+    if(player!=null){
+      updateCamera();
+    }
 
+  }
+
+  public int getClientID(){
+    return clientID;
   }
 
   @Override
   public void draw(SpriteBatch batch) {
 
-    TextureRegion[][] tmp;
+    getChild(TiledWorld.class).draw(batch);
 
+    TextureRegion[][] tmp;
+    batch.setProjectionMatrix(getCamera().combined);
     for(String[] s : drawables) {
       final int FRAME_COLS = 32, FRAME_ROWS = 23;
-      Texture walkSheet = MyGdxGame.getAssetManager().get(s[2]);
+      Texture walkSheet = MyGdxGame.getAssetManager().get("lastguardian_all.png");
       tmp = TextureRegion.split(walkSheet, walkSheet.getWidth() / FRAME_COLS,
           walkSheet.getHeight() / FRAME_ROWS);
+      batch.begin();
       batch.draw(tmp[Integer.parseInt(s[5])][Integer.parseInt(s[6])],Float.parseFloat(s[3]),Float.parseFloat(s[4]));
+      batch.end();
     }
-
-    getChild(TiledWorld.class).draw(batch);
-    batch.begin();
-
-    batch.end();
-    //System.out.println(player.getComponent(PlayerGraphics.class).getCurrentCol());
 
   }
 
-  public void resetPlayer(){
-    for(String[] s : drawables) {
-      if(s[1].equals(id)) {
-        player = s;
-      }
-    }
-  }
 }

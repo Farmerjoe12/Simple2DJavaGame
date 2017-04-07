@@ -11,7 +11,6 @@ import com.mygdx.game.components.physicsComponent.Transform;
  */
 public class Player extends Character {
 
-
   public Player() {
     Transform transform = new Transform(0, 0);
     addComponent(transform);
@@ -23,7 +22,6 @@ public class Player extends Character {
   public void draw(SpriteBatch b) {
     b.setProjectionMatrix(MyGdxGame.currentGame.getCamera().combined);
     getComponent(PlayerGraphics.class).draw(b);
-
   }
 
   @Override

@@ -1,5 +1,6 @@
 package com.mygdx.game.utilities;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -36,10 +37,7 @@ public class Animator {
     startIndex = startSprite;
     frameTime = 0.2f;
 
-
     walkSheet = MyGdxGame.getAssetManager().get("lastguardian_all.png");
-
-
 
     // this array is populated with individual indexes of sprites from the
     // sprite sheet to make them easily accessible
@@ -56,7 +54,6 @@ public class Animator {
     walkAnimation = new Animation<TextureRegion>(frameTime, walkFrames);
     walkAnimation.setPlayMode(PlayMode.LOOP);
 
-    spriteBatch = new SpriteBatch();
     stateTime = 0f;
   }
 
@@ -67,7 +64,6 @@ public class Animator {
   }
 
   public static void dispose() {
-    spriteBatch.dispose();
     walkSheet.dispose();
   }
 
@@ -76,6 +72,7 @@ public class Animator {
   }
 
   public int getColumn() {
+    stateTime += Gdx.graphics.getDeltaTime();
     return startIndex + walkAnimation.getKeyFrameIndex(stateTime);
   }
 }

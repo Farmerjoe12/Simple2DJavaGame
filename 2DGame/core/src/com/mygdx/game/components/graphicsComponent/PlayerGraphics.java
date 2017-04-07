@@ -62,6 +62,8 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
 
   public int getCurrentCol()
   {
+    input = getParent().getComponent(PlayerInput.class).getCurrentDirection();
+    currAnimation = getCurrentAnimation(input);
     if (!(currAnimation == null)) {
       return currAnimation.getColumn();
     } else {

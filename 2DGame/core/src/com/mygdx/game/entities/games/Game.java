@@ -1,5 +1,6 @@
 package com.mygdx.game.entities.games;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
@@ -14,6 +15,7 @@ import com.mygdx.game.entities.worlds.TiledWorld;
  * Created by Jacob on 3/29/2017.
  */
 public abstract class Game extends Entity {
+
   private OrthographicCamera camera;
 
   public void setCamera(OrthographicCamera camera) {
