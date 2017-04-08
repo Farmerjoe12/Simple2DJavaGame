@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,12 +33,12 @@ public class MyGdxGame extends ApplicationAdapter {
     float h = Gdx.graphics.getHeight();
 
     simpleGame = new Simple2DJavaGame();
-
+    simpleGame.addChild(new TiledWorld());
+    
     Player player = new Player();
-    player.getComponent(Transform.class).setPosition(new Vector2(100f, 100f));
+    player.getComponent(Transform.class).setPosition(new Vector2(1000f, 1000f));
 
     simpleGame.addChild(player);
-    simpleGame.addChild(new TiledWorld());
 
     OrthographicCamera cam = new OrthographicCamera(30, 30 * (h / w));
     cam.setToOrtho(false, 960, 640);
