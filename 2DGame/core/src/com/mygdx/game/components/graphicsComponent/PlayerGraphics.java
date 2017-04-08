@@ -6,6 +6,9 @@ import com.mygdx.game.components.Component;
 import com.mygdx.game.components.inputComponent.PlayerInput;
 import com.mygdx.game.components.physicsComponent.Collide;
 import com.mygdx.game.components.physicsComponent.Transform;
+import com.mygdx.game.components.statComponent.PlayerStatComponent;
+import com.mygdx.game.entities.Entity;
+import com.mygdx.game.entities.characters.Player;
 
 /**
  * Created by Jacob on 3/29/2017.
@@ -14,14 +17,17 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
   private Animator[] animSet;
   private Animator currAnimation = null;
   private int input;
-  private int lastDir;
-  float delta = 1f;
+  private float delta;
 
   public PlayerGraphics() {
     // createAnimSet takes parameters for row on the spritesheet and set
     // of sprites, the top leftmost set is row 0, set 0 increasing
     // down and to the right
     createAnimSet(22, 0);
+    Entity parent = this.getParent();
+    Transform trans = parent.getComponent(Transform.class);
+    PlayerStatComponent stats = parent.getComponent(PlayerStatComponent.class);
+    float delta = stats.getMoveSpeed();
   }
 
   @Override
@@ -47,13 +53,13 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
   public void move(int input)
   {
 	  switch (input) {
-	  case 0: getParent().getComponent(Transform.class).deltaY(delta);
+	  case 0: getParent().getComponent(Transform.class).deltaY(delta);//parent.getComponent(PlayerStatComponent.class).getMoveSpeed());//trans.deltaY(stats.getMoveSpeed());
 	  break;
-	  case 1: getParent().getComponent(Transform.class).deltaY(-delta);
+	  case 1: getParent().getComponent(Transform.class).deltaY(-delta);//parent.getComponent(PlayerStatComponent.class).getMoveSpeed());//trans.deltaY(-stats.getMoveSpeed());
 	  break;
-	  case 2: getParent().getComponent(Transform.class).deltaX(-delta);
+	  case 2: getParent().getComponent(Transform.class).deltaX(-delta);//parent.getComponent(PlayerStatComponent.class).getMoveSpeed());//trans.deltaX(-stats.getMoveSpeed());
 	  break;
-	  case 3: getParent().getComponent(Transform.class).deltaX(delta);
+	  case 3: getParent().getComponent(Transform.class).deltaX(delta);//parent.getComponent(PlayerStatComponent.class).getMoveSpeed());//trans.deltaX(stats.getMoveSpeed());
 	  break;
 	  default: break;
 	  }

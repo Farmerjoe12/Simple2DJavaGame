@@ -21,8 +21,7 @@ public class Transform extends Component {
     position = new Vector2(x, y);
   }
 
-  // deltaX and deltaY are the actual movement methods called
-  // from the input components
+  // deltaX and deltaY are the actual movement methods
   public void deltaX(float dx) {
     position.x += dx;
   }

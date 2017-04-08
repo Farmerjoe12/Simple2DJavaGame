@@ -6,6 +6,7 @@ import com.mygdx.game.components.graphicsComponent.PlayerGraphics;
 import com.mygdx.game.components.inputComponent.PlayerInput;
 import com.mygdx.game.components.physicsComponent.Collide;
 import com.mygdx.game.components.physicsComponent.Transform;
+import com.mygdx.game.components.statComponent.PlayerStatComponent;
 
 /**
  * Created by Jacob on 3/29/2017.
@@ -14,6 +15,7 @@ public class Player extends Character {
   public Player() {
     Transform transform = new Transform(0, 0);
     addComponent(transform);
+    addComponent(new PlayerStatComponent());
     addComponent(new PlayerGraphics());
     addComponent(new PlayerInput());
     addComponent(new Collide());
