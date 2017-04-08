@@ -61,7 +61,6 @@ project(":core") {
         compile "com.esotericsoftware:kryonet:2.22.0-RC1"
     }
 }
-
 tasks.eclipse.doLast {
     delete ".project"
 }

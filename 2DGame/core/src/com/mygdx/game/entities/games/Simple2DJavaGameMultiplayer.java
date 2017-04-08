@@ -38,9 +38,14 @@ public class Simple2DJavaGameMultiplayer extends Game {
     KryoSerialization serialization = new KryoSerialization(kryo);
 
     client = new Client(1024,256,serialization);
+    kryo = client.getKryo();
+    kryo.register(String.class);
+    kryo.register(String[].class);
+    kryo.register(Integer.class);
+    kryo.register(Integer[].class);
     client.start();
     try {
-      client.connect(5000, "127.0.0.1", 54555, 54777);
+      client.connect(5000, "25.87.65.193", 51197, 54777);
       clientID = client.getID();
     } catch (IOException e) {
       e.printStackTrace();
@@ -51,9 +56,9 @@ public class Simple2DJavaGameMultiplayer extends Game {
       public void received (Connection connection, Object object) {
         if (object instanceof String[]) {
           String[] in = (String[])object;
-          System.out.println("client got message:");
+          //System.out.println("client got message:");
           for(int i = 0; i < in.length; i++) {
-            System.out.println("\t"+in[i]);
+            //System.out.println("\t"+in[i]);
           }
           if(in[0].equals("drawable")) {
             addDrawable(in);
@@ -65,10 +70,8 @@ public class Simple2DJavaGameMultiplayer extends Game {
       }
     });
 
-    kryo = client.getKryo();
-    kryo.register(String[].class);
-    kryo.register(String.class);
-    kryo.register(Integer.class);
+
+
 
   }
 
@@ -101,11 +104,11 @@ public class Simple2DJavaGameMultiplayer extends Game {
   public void updateCamera() {
     float x = Float.parseFloat(player[3]) + 16;
     float y = Float.parseFloat(player[4]) + 16;
-    System.out.println(x+","+y);
+    //System.out.println(x+","+y);
     getCamera().position.set(x, y, 0);
     checkMapBorders();
     getCamera().update();
-    System.out.println(getCamera().position.x+","+ getCamera().position.y);
+    //System.out.println(getCamera().position.x+","+ getCamera().position.y);
   }
 
   public void dispose() {

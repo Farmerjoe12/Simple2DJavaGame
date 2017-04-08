@@ -38,9 +38,14 @@ public class KryonetServer
     KryoSerialization serialization = new KryoSerialization(kryo);
 
     server = new Server(1024,256,serialization);
+    kryo = server.getKryo();
+    kryo.register(String.class);
+    kryo.register(String[].class);
+    kryo.register(Integer.class);
+    kryo.register(Integer[].class);
     server.start();
     try {
-      server.bind(54555, 54777);
+      server.bind(51197, 54777);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -82,6 +87,7 @@ public class KryonetServer
       @Override
       public void connected(Connection connection) {
         super.connected(connection);
+        System.out.println(connection.getRemoteAddressTCP());
         Player player = new Player();
         player.setId(connection.getID());
         players.add(player);
@@ -97,10 +103,7 @@ public class KryonetServer
       }
     });
 
-    kryo = server.getKryo();
-    kryo.register(String[].class);
-    kryo.register(String.class);
-    kryo.register(Integer.class);
+
   }
 
   public void dispose(){
