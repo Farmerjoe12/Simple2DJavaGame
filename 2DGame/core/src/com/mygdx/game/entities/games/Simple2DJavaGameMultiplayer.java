@@ -45,7 +45,7 @@ public class Simple2DJavaGameMultiplayer extends Game {
     kryo.register(Integer[].class);
     client.start();
     try {
-      client.connect(5000, "25.87.65.193", 51197, 54777);
+      client.connect(5000, "127.0.0.1", 51197, 54777);
       clientID = client.getID();
     } catch (IOException e) {
       e.printStackTrace();
