@@ -1,11 +1,12 @@
 package com.mygdx.game.components.graphicsComponent;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.utilities.Animator;
 import com.mygdx.game.components.Component;
 import com.mygdx.game.components.inputComponent.PlayerInput;
 import com.mygdx.game.components.physicsComponent.Collide;
 import com.mygdx.game.components.physicsComponent.Transform;
+import com.mygdx.game.components.statComponent.PlayerStatComponent;
+import com.mygdx.game.utilities.Animator;
 
 /**
  * Created by Jacob on 3/29/2017.
@@ -15,18 +16,20 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
   private Animator currAnimation = null;
   private int input;
   private int lastDir;
-  float delta = 1f;
-
+  float delta;	//stats.getMoveSpeed();
+  
   public PlayerGraphics() {
     // createAnimSet takes parameters for row on the spritesheet and set
     // of sprites, the top leftmost set is row 0, set 0 increasing
     // down and to the right
     createAnimSet(22, 0);
+   
   }
 
   @Override
   public void draw(SpriteBatch batch) {
     input = getParent().getComponent(PlayerInput.class).handleInput();
+    //lastDir = input;
     float x = getParent().getComponent(Transform.class).getPosition().x;
     float y = getParent().getComponent(Transform.class).getPosition().y;
     
@@ -46,6 +49,7 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
   
   public void move(int input)
   {
+	  delta = getParent().getComponent(PlayerStatComponent.class).getMoveSpeed();
 	  switch (input) {
 	  case 0: getParent().getComponent(Transform.class).deltaY(delta);
 	  break;
