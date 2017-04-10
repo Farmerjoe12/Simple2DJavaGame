@@ -1,7 +1,6 @@
 package com.mygdx.game.components.graphicsComponent;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.components.Component;
 import com.mygdx.game.components.inputComponent.AI;
 import com.mygdx.game.components.physicsComponent.Collide;
@@ -14,17 +13,12 @@ public class EnemyGraphics extends Component implements GraphicsComponent {
   private Animator currAnimation = null;
   private int input;
   private int lastDir = 1;
-  float delta = 1f;
-  boolean moveFlag = false;
-  long lastTime;
 
   public EnemyGraphics() {
     // createAnimSet takes parameters for row on the spritesheet and set
     // of sprites, the top leftmost set is row 0, set 0 increasing
     // down and to the right
     createAnimSet(12, 0);
-    //currAnimation = animSet[1];
-    lastTime = TimeUtils.millis();
   }
 
   @Override
@@ -32,17 +26,11 @@ public class EnemyGraphics extends Component implements GraphicsComponent {
     float x = getParent().getComponent(Transform.class).getPosition().x;
     float y = getParent().getComponent(Transform.class).getPosition().y; 
     
-    if (TimeUtils.timeSinceMillis(lastTime) > 2000){
-		moveFlag = !moveFlag;
-		lastTime = TimeUtils.millis();
-		input = getParent().getComponent(AI.class).handleInput();
-	}
+    input = getParent().getComponent(AI.class).handleInput();
+    currAnimation = getCurrentAnimation(input);
     
-	if (moveFlag && 
-			!getParent().getComponent(Collide.class).isBlocked(input) &&
-			currAnimation != null) {
-    	move(input);
-        currAnimation = getCurrentAnimation(input);
+	if (!getParent().getComponent(Collide.class).isBlocked(input)
+			&& currAnimation != null) {
         batch.draw(currAnimation.getCurrentTextureRegion(), x, y, 32, 32);
 	} else {
 	     batch.draw(animSet[lastDir].getLastFrame(), x, y, 32, 32);		
@@ -50,25 +38,6 @@ public class EnemyGraphics extends Component implements GraphicsComponent {
 	
   }
   
-  public void move(int input)
-  {
-	  
-	  switch (input) {
-	  case -1: 
-		break;
-	  case 0: getParent().getComponent(Transform.class).deltaY(delta);
-	  	break;
-	  case 1: getParent().getComponent(Transform.class).deltaY(-delta);
-	  	break;
-	  case 2: getParent().getComponent(Transform.class).deltaX(-delta);
-	  	break;
-	  case 3: getParent().getComponent(Transform.class).deltaX(delta);
-	  	break;
-	  default: 
-		break;
-	  }
-  }
-
   public Animator getCurrentAnimation(int input) {
     if (input >= 0) {
       lastDir = input;

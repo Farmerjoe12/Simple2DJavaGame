@@ -1,6 +1,7 @@
 package com.mygdx.game.entities.games;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.entities.characters.Enemy;
 import com.mygdx.game.entities.characters.Player;
 import com.mygdx.game.entities.worlds.TiledWorld;
 
@@ -22,6 +23,7 @@ public class Simple2DJavaGame extends Game
         getChild(TiledWorld.class).drawBackground(batch);
         batch.begin();
         getChild(Player.class).draw(batch);
+        getChild(Enemy.class).draw(batch);
         batch.end();
         getChild(TiledWorld.class).drawForeground(batch);
     }

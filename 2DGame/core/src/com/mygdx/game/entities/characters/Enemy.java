@@ -5,11 +5,13 @@ import com.mygdx.game.components.graphicsComponent.EnemyGraphics;
 import com.mygdx.game.components.inputComponent.AI;
 import com.mygdx.game.components.physicsComponent.Collide;
 import com.mygdx.game.components.physicsComponent.Transform;
+import com.mygdx.game.components.statComponent.EnemyStatComponent;
 
 public class Enemy extends Character {
 
 	public Enemy()  /** Number 1 **/ {
 		addComponent(new Transform(0, 0));
+		addComponent(new EnemyStatComponent());
 		addComponent(new EnemyGraphics());
 		addComponent(new AI());
 		addComponent(new Collide());
