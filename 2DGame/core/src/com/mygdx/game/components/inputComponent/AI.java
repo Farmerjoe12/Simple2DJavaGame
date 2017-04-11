@@ -108,6 +108,7 @@ public class AI extends Component implements InputComponent {
 			} else if ((npcXTile - playerXTile) < 0) {
 				input = 3;
 			} else {
+				input = -1;
 				System.out.println("Caught player");
 			}
 			lastTime = TimeUtils.millis();
