@@ -3,7 +3,6 @@ package com.mygdx.game.components.inputComponent;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.Component;
-import com.mygdx.game.components.physicsComponent.Transform;
 import com.mygdx.game.entities.games.Simple2DJavaGameMultiplayer;
 import com.mygdx.game.utilities.Command;
 import com.mygdx.game.utilities.InputMapper;

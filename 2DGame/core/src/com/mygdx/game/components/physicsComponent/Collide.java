@@ -29,8 +29,8 @@ public class Collide extends Component{
 
   // m supply the amount of tiles in each row/column,
   // so you must multiply it by the tile width in order to get the map dimensions
-  int mapPixelWidth = mapWidth * tilePixelWidth;
-  int mapPixelHeight = mapHeight * tilePixelHeight;
+  int mapPixelWidth;
+  int mapPixelHeight;
     
 	private boolean bottomLeft, bottomRight, topRight, topLeft;
 
@@ -42,6 +42,8 @@ public class Collide extends Component{
     mapHeight = prop.get("height", Integer.class);
     tilePixelWidth = prop.get("tilewidth", Integer.class);
     tilePixelHeight = prop.get("tileheight", Integer.class);
+    mapPixelWidth = mapWidth * tilePixelWidth;
+    mapPixelHeight = mapHeight * tilePixelHeight;
   }
 
 	
@@ -52,7 +54,6 @@ public class Collide extends Component{
 	public boolean isBlocked(int facing)
 	{
 		position = getParent().getComponent(Transform.class).position;
-		
 	    
     /**
      * baseX&Y and adjX&Y are used to get the corners of the sprite, since

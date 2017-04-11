@@ -40,7 +40,6 @@ public class PlayerInput extends Component implements InputComponent {
         float deltaVal = getParent().getComponent(PlayerStatComponent.class).getMoveSpeed();
         currentDirection = UP;
         if(!getParent().getComponent(Collide.class).isBlocked(currentDirection)){
-          System.out.println("not blocked");
           getParent().getComponent(Transform.class).deltaY(deltaVal);
         }
 
@@ -53,7 +52,6 @@ public class PlayerInput extends Component implements InputComponent {
         float deltaVal = getParent().getComponent(PlayerStatComponent.class).getMoveSpeed();
         currentDirection = LEFT;
         if(!getParent().getComponent(Collide.class).isBlocked(currentDirection)){
-          System.out.println("not blocked");
           getParent().getComponent(Transform.class).deltaX(-deltaVal);
         }
 
@@ -66,7 +64,6 @@ public class PlayerInput extends Component implements InputComponent {
         float deltaVal = getParent().getComponent(PlayerStatComponent.class).getMoveSpeed();
         currentDirection = RIGHT;
         if(!getParent().getComponent(Collide.class).isBlocked(currentDirection)){
-          System.out.println("not blocked");
           getParent().getComponent(Transform.class).deltaX(deltaVal);
         }
 
@@ -79,7 +76,6 @@ public class PlayerInput extends Component implements InputComponent {
         float deltaVal = getParent().getComponent(PlayerStatComponent.class).getMoveSpeed();
         currentDirection = DOWN;
         if(!getParent().getComponent(Collide.class).isBlocked(currentDirection)){
-          System.out.println("not blocked");
           getParent().getComponent(Transform.class).deltaY(-deltaVal);
         }
 
@@ -92,7 +88,6 @@ public class PlayerInput extends Component implements InputComponent {
         float deltaVal = getParent().getComponent(PlayerStatComponent.class).getMoveSpeed();
         currentDirection = UP;
         if(!getParent().getComponent(Collide.class).isBlocked(currentDirection)){
-          System.out.println("not blocked");
           getParent().getComponent(Transform.class).deltaY(2*deltaVal);
         }
 
@@ -105,7 +100,6 @@ public class PlayerInput extends Component implements InputComponent {
         float deltaVal = getParent().getComponent(PlayerStatComponent.class).getMoveSpeed();
         currentDirection = LEFT;
         if(!getParent().getComponent(Collide.class).isBlocked(currentDirection)){
-          System.out.println("not blocked");
           getParent().getComponent(Transform.class).deltaX(-2*deltaVal);
         }
 
@@ -118,7 +112,6 @@ public class PlayerInput extends Component implements InputComponent {
         float deltaVal = getParent().getComponent(PlayerStatComponent.class).getMoveSpeed();
         currentDirection = RIGHT;
         if(!getParent().getComponent(Collide.class).isBlocked(currentDirection)){
-          System.out.println("not blocked");
           getParent().getComponent(Transform.class).deltaX(2*deltaVal);
         }
 
@@ -131,7 +124,6 @@ public class PlayerInput extends Component implements InputComponent {
         float deltaVal = getParent().getComponent(PlayerStatComponent.class).getMoveSpeed();
         currentDirection = DOWN;
         if(!getParent().getComponent(Collide.class).isBlocked(currentDirection)){
-          System.out.println("not blocked");
           getParent().getComponent(Transform.class).deltaY(-2*deltaVal);
         }
 
@@ -143,12 +135,12 @@ public class PlayerInput extends Component implements InputComponent {
   @Override
   public int handleInput() {
     ArrayList<Integer> buttonsList = MyGdxGame.listener.getKeysPressed();
-    String command;
     if(mapper.containsCommand(buttonsList)){
-      command = mapper.getCommand(buttonsList).executeCommand();
+      mapper.getCommand(buttonsList).executeCommand();
       return currentDirection;
     } else {
-      //System.out.println("mapper doesnt contain current button array");
+      //To-Do : check to see if there is a subsection of buttons pressed that is a relevant command
+      //          and check from context what attempted command is most probable
     }
     return -1;
   }

@@ -1,6 +1,5 @@
 package com.mygdx.game.utilities;
 
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -8,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.server.KryonetServer;
 
 /**
  * Animator is used to provide the animations for the sprites

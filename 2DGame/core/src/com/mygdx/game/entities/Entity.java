@@ -2,9 +2,7 @@ package com.mygdx.game.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.components.Component;
-
 import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * Created by Jacob on 3/29/2017.

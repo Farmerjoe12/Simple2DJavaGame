@@ -16,7 +16,6 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
   private Animator currAnimation = null;
   private int input;
   private int lastDir;
-  float delta;	//stats.getMoveSpeed();
   
   public PlayerGraphics() {
     // createAnimSet takes parameters for row on the spritesheet and set
@@ -29,18 +28,14 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
   @Override
   public void draw(SpriteBatch batch) {
     input = getParent().getComponent(PlayerInput.class).handleInput();
-    //lastDir = input;
     float x = getParent().getComponent(Transform.class).getPosition().x;
     float y = getParent().getComponent(Transform.class).getPosition().y;
-
     currAnimation = getCurrentAnimation(input);
-
     if (!(currAnimation == null)) {
       batch.draw(currAnimation.getCurrentTextureRegion(), x, y, 32, 32);
     } else {
       batch.draw(animSet[lastDir].getLastFrame(), x, y, 32, 32);
     }
-
   }
   
 
@@ -51,10 +46,6 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
       return animSet[input];
     } else
       return null;
-  }
-
-  public void updateSpritePositions() {
-
   }
 
   public void createAnimSet(int spriteRow, int spriteSet) {

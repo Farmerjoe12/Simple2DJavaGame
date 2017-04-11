@@ -9,8 +9,5 @@ import com.mygdx.game.entities.Entity;
  * Created by Jacob on 3/29/2017.
  */
 public abstract class Character extends Entity {
-  public void setPosition(Vector2 pos) {
-    getComponent(Transform.class).setPosition(pos);
-    getComponent(PlayerGraphics.class).updateSpritePositions();
-  }
+
 }

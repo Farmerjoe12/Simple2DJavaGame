@@ -9,15 +9,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Vector2;
-import com.esotericsoftware.kryonet.Client;
-import com.mygdx.game.components.graphicsComponent.PlayerGraphics;
-import com.mygdx.game.components.inputComponent.MultiplayerInput;
-import com.mygdx.game.components.inputComponent.PlayerInput;
 import com.mygdx.game.entities.characters.Player;
 import com.mygdx.game.entities.games.Game;
 import com.mygdx.game.entities.games.Simple2DJavaGameMultiplayer;
@@ -25,8 +19,6 @@ import com.mygdx.game.entities.games.Simple2DJavaGameSingleplayer;
 import com.mygdx.game.components.physicsComponent.Transform;
 import com.mygdx.game.entities.worlds.TiledWorld;
 import com.mygdx.game.utilities.ButtonListener;
-import com.mygdx.server.KryonetServer;
-import java.io.IOException;
 
 /**
  * This is the main class that runs the program, all rendering is currently handled through the
@@ -100,6 +92,7 @@ public class MyGdxGame extends ApplicationAdapter {
     assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
     assetManager.load("1.tmx", TiledMap.class);
     assetManager.load("2.tmx", TiledMap.class);
+    assetManager.load("21.tmx", TiledMap.class);
     assetManager.finishLoading();
   }
 
