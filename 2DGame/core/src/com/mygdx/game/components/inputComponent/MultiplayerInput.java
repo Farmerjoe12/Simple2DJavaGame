@@ -18,11 +18,12 @@ public class MultiplayerInput extends Component implements InputComponent {
   Simple2DJavaGameMultiplayer parent;
 
   public MultiplayerInput(){
-    //parent = MyGdxGame.simple2DJavaGameMultiplayer;
     mapper = new InputMapper();
+
     mapper.mapCommand(new Integer[]{Input.Keys.UP},new Command() {
       @Override
       public String executeCommand() {
+        parent = ((Simple2DJavaGameMultiplayer)getParent());
         ArrayList<Integer> buttonsList = MyGdxGame.listener.getKeysPressed();
         Integer[] buttons = new Integer[buttonsList.size()];
         for(int i = 0; i < buttons.length; i++){
@@ -35,6 +36,7 @@ public class MultiplayerInput extends Component implements InputComponent {
     mapper.mapCommand(new Integer[]{Input.Keys.LEFT},new Command() {
       @Override
       public String executeCommand() {
+        parent = ((Simple2DJavaGameMultiplayer)getParent());
         ArrayList<Integer> buttonsList = MyGdxGame.listener.getKeysPressed();
         Integer[] buttons = new Integer[buttonsList.size()];
         for(int i = 0; i < buttons.length; i++){
@@ -47,6 +49,7 @@ public class MultiplayerInput extends Component implements InputComponent {
     mapper.mapCommand(new Integer[]{Input.Keys.RIGHT},new Command() {
       @Override
       public String executeCommand() {
+        parent = ((Simple2DJavaGameMultiplayer)getParent());
         ArrayList<Integer> buttonsList = MyGdxGame.listener.getKeysPressed();
         Integer[] buttons = new Integer[buttonsList.size()];
         for(int i = 0; i < buttons.length; i++){
@@ -59,6 +62,7 @@ public class MultiplayerInput extends Component implements InputComponent {
     mapper.mapCommand(new Integer[]{Input.Keys.DOWN},new Command() {
       @Override
       public String executeCommand() {
+        parent = ((Simple2DJavaGameMultiplayer)getParent());
         ArrayList<Integer> buttonsList = MyGdxGame.listener.getKeysPressed();
         Integer[] buttons = new Integer[buttonsList.size()];
         for(int i = 0; i < buttons.length; i++){

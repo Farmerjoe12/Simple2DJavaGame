@@ -29,6 +29,7 @@ public class Simple2DJavaGameMultiplayer extends Game {
   String[] player;
 
   public Simple2DJavaGameMultiplayer() {
+    MyGdxGame.currentGame = this;
     new KryonetServer();
     TiledWorld tiledWorld = new TiledWorld();
     addChild(tiledWorld);
@@ -71,6 +72,7 @@ public class Simple2DJavaGameMultiplayer extends Game {
     });
 
 
+    addComponent(new MultiplayerInput());
 
 
   }

@@ -2,6 +2,7 @@ package com.mygdx.game.utilities;
 
 import com.badlogic.gdx.InputProcessor;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Jacob on 4/7/2017.
@@ -53,6 +54,7 @@ public class ButtonListener implements InputProcessor {
   }
 
   public ArrayList<Integer> getKeysPressed(){
+    Collections.sort(keysPressed);
     return keysPressed;
   }
 }

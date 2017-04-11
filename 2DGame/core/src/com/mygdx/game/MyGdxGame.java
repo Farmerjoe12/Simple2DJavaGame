@@ -40,7 +40,7 @@ public class MyGdxGame extends ApplicationAdapter {
   public static ButtonListener listener = new ButtonListener();
   static AssetManager assetManager = new AssetManager();
   public static Simple2DJavaGameSingleplayer simple2DJavaGameSingleplayer;
-  //public static Simple2DJavaGameMultiplayer simple2DJavaGameMultiplayer;
+  public static Simple2DJavaGameMultiplayer simple2DJavaGameMultiplayer;
   public static Game currentGame;
   SpriteBatch batch;
   OrthographicCamera cam;
@@ -67,7 +67,6 @@ public class MyGdxGame extends ApplicationAdapter {
 
     Gdx.input.setInputProcessor(listener);
 
-    //simple2DJavaGameMultiplayer.addComponent(new MultiplayerInput());
   }
 
   @Override
