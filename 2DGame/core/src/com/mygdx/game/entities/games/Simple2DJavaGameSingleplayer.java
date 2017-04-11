@@ -20,7 +20,7 @@ public class Simple2DJavaGameSingleplayer extends Game {
     Player player = new Player();
     Enemy enemy = new Enemy();
     addChild(enemy);
-    player.getComponent(Transform.class).setPosition(new Vector2(900f, 900f));
+    player.getComponent(Transform.class).setPosition(new Vector2(450f, 900f));
 
     addChild(player);
 
