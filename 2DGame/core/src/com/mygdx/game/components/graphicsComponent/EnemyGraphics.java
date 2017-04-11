@@ -2,66 +2,50 @@ package com.mygdx.game.components.graphicsComponent;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.components.Component;
-import com.mygdx.game.components.inputComponent.PlayerInput;
+import com.mygdx.game.components.inputComponent.AI;
 import com.mygdx.game.components.physicsComponent.Collide;
 import com.mygdx.game.components.physicsComponent.Transform;
-import com.mygdx.game.components.statComponent.PlayerStatComponent;
 import com.mygdx.game.utilities.Animator;
 
-/**
- * Created by Jacob on 3/29/2017.
- */
-public class PlayerGraphics extends Component implements GraphicsComponent {
+
+public class EnemyGraphics extends Component implements GraphicsComponent {
   private Animator[] animSet;
-  private Animator currAnimation = null;
-  private int input;
-  private int lastDir;
-  float delta;	//stats.getMoveSpeed();
-  
-  public PlayerGraphics() {
+  private Animator currAnimation;
+  private int input, lastDir;
+
+  /**
+   * EnemyGraphics is solely responsible for drawing the animations and sprites
+   * -- as it should be
+   */
+  public EnemyGraphics() {
     // createAnimSet takes parameters for row on the spritesheet and set
     // of sprites, the top leftmost set is row 0, set 0 increasing
     // down and to the right
-    createAnimSet(22, 0);
-   
+    createAnimSet(12, 0);
+    currAnimation = null;
+    lastDir = 1;
   }
 
+  // draw gets the input as well as current location
+  // then draws the animation or last frame depending on if moving or not
+  // which is determined by input
   @Override
   public void draw(SpriteBatch batch) {
     float x = getParent().getComponent(Transform.class).getPosition().x;
-    float y = getParent().getComponent(Transform.class).getPosition().y;
-
-    input = getParent().getComponent(PlayerInput.class).handleInput();
+    float y = getParent().getComponent(Transform.class).getPosition().y; 
     
-    if (!getParent().getComponent(Collide.class).isBlocked(input)) {
-    	move(input);
-    }
-    
+    input = getParent().getComponent(AI.class).handleInput();
     currAnimation = getCurrentAnimation(input);
-
-    if (!(currAnimation == null)) {
-      batch.draw(currAnimation.getCurrentTextureRegion(), x, y, 32, 32);
-    } else {
-      batch.draw(animSet[lastDir].getLastFrame(), x, y, 32, 32);
-    }
+    
+	if (!getParent().getComponent(Collide.class).isBlocked(input)
+			&& currAnimation != null) {
+        batch.draw(currAnimation.getCurrentTextureRegion(), x, y, 32, 32);
+	} else {
+	     batch.draw(animSet[lastDir].getLastFrame(), x, y, 32, 32);		
+	}
+	
   }
   
-  private void move(int input)
-  {
-	  delta = getParent().getComponent(PlayerStatComponent.class).getMoveSpeed();
-	  switch (input) {
-	  case 0: getParent().getComponent(Transform.class).deltaY(delta);
-	  break;
-	  case 1: getParent().getComponent(Transform.class).deltaY(-delta);
-	  break;
-	  case 2: getParent().getComponent(Transform.class).deltaX(-delta);
-	  break;
-	  case 3: getParent().getComponent(Transform.class).deltaX(delta);
-	  break;
-	  default: break;
-	  }
-  }
-
   private Animator getCurrentAnimation(int input) {
     if (input >= 0) {
       lastDir = input;
@@ -69,7 +53,7 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
     } else
       return null;
   }
-
+  
   private void createAnimSet(int spriteRow, int spriteSet) {
     int startSprite = spriteSet * 8;
     int endSprite = startSprite + 1;
