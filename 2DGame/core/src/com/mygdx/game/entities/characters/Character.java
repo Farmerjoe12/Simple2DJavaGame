@@ -1,8 +1,5 @@
 package com.mygdx.game.entities.characters;
 
-import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.components.graphicsComponent.PlayerGraphics;
-import com.mygdx.game.components.physicsComponent.Transform;
 import com.mygdx.game.entities.Entity;
 
 /**

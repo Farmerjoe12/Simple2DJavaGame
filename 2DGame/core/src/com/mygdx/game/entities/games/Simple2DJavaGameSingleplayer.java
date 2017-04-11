@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.physicsComponent.Transform;
+import com.mygdx.game.entities.characters.Enemy;
 import com.mygdx.game.entities.characters.Player;
 import com.mygdx.game.entities.worlds.TiledWorld;
 
@@ -17,7 +18,9 @@ public class Simple2DJavaGameSingleplayer extends Game {
     TiledWorld tiledWorld = new TiledWorld();
     addChild(tiledWorld);
     Player player = new Player();
-    player.getComponent(Transform.class).setPosition(new Vector2(200f, 200f));
+    Enemy enemy = new Enemy();
+    addChild(enemy);
+    player.getComponent(Transform.class).setPosition(new Vector2(900f, 900f));
 
     addChild(player);
 
@@ -34,6 +37,7 @@ public class Simple2DJavaGameSingleplayer extends Game {
     getChild(TiledWorld.class).drawBackground(batch);
     batch.begin();
     getChild(Player.class).draw(batch);
+    getChild(Enemy.class).draw(batch);
     batch.end();
     getChild(TiledWorld.class).drawForeground(batch);
   }

@@ -14,7 +14,7 @@ import com.mygdx.game.components.statComponent.PlayerStatComponent;
 public class Player extends Character {
 
   public Player() {
-    Transform transform = new Transform(0, 0);
+    Transform transform = new Transform(900, 900);
     addComponent(transform);
     addComponent(new PlayerStatComponent());
     addComponent(new PlayerGraphics());
@@ -28,8 +28,9 @@ public class Player extends Character {
     getComponent(PlayerGraphics.class).draw(b);
   }
 
-  @Override
-  public void tick() {
-  }
+
+	@Override
+	public void tick() {
+	}
 
 }

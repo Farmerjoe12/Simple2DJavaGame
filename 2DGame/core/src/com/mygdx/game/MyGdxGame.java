@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
@@ -9,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -17,6 +17,7 @@ import com.mygdx.game.entities.games.Game;
 import com.mygdx.game.entities.games.Simple2DJavaGameMultiplayer;
 import com.mygdx.game.entities.games.Simple2DJavaGameSingleplayer;
 import com.mygdx.game.components.physicsComponent.Transform;
+
 import com.mygdx.game.entities.worlds.TiledWorld;
 import com.mygdx.game.utilities.ButtonListener;
 
@@ -46,12 +47,14 @@ public class MyGdxGame extends ApplicationAdapter {
     float w = Gdx.graphics.getWidth();
     float h = Gdx.graphics.getHeight();
 
+
     simple2DJavaGameSingleplayer = new Simple2DJavaGameSingleplayer();
     //simple2DJavaGameMultiplayer = new Simple2DJavaGameMultiplayer();
 
 
 
     cam = new OrthographicCamera(30, 30 * (h / w));
+
     cam.setToOrtho(false, 960, 640);
     cam.position.set(0, 0, 0);
     currentGame.setCamera(cam);
