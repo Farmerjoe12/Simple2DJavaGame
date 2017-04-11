@@ -17,21 +17,24 @@ public class AI extends Component implements InputComponent {
 	// if enemy is idle but player comes into range,
 	// enemy will chase
 	private boolean idle = true;
-	int input;
-	float num;
+	private int input;
+	private float num;
 	private Random rand;
-	int range = 500;
-	float diffX;
-	float diffY;
-	Vector2 playerPos;
-	Vector2 myPos;
-	Vector2 diff;
+	private int sightRange, attackRange;
+	private Vector2 playerPos;
+	private int playerXTile, playerYTile;
+	private Vector2 myPos;
+	private int npcXTile, npcYTile;
+	private int deltaX, deltaY;
 	boolean moveFlag = false;
-	long lastTime;
+	private long lastTime;
+	
 	
 	public AI() {
 		rand = new Random();
 		lastTime = TimeUtils.millis();
+		sightRange = 250;
+		attackRange = 32;
 	}
 	
 	@Override
@@ -42,14 +45,17 @@ public class AI extends Component implements InputComponent {
 		// checking if player is within range of enemy,
 		// if search then player is found
 		// if found, chase
+		// else if player is lost, return to idle
 		if (search(myPos, playerPos)) {
 			idle = false;
 			input = chase(myPos, playerPos);
+		} else {
+			idle = true;
 		}
 
 		// player alternates between wandering and standing every
 		// **two** seconds while player is not found (idle)
-		if (TimeUtils.timeSinceMillis(lastTime) > 2000 && idle){
+		if (TimeUtils.timeSinceMillis(lastTime) > 1500 && idle){
 			moveFlag = !moveFlag;
 			lastTime = TimeUtils.millis();
 			input = wander();
@@ -68,14 +74,15 @@ public class AI extends Component implements InputComponent {
 	
 	// search returns true if player is within range
 	private boolean search(Vector2 myPos, Vector2 playerPos) {
-		if ((Math.abs(myPos.x-playerPos.x) < range) &&
-			(Math.abs(myPos.y-playerPos.y) < range)) {
+		if ((Math.abs(myPos.x-playerPos.x) < sightRange) &&
+			(Math.abs(myPos.y-playerPos.y) < sightRange)) {
 			return true;
 		}
 		return false;
 	}
+	
+	// wander generates random numbers to simulate enemy wandering about
 	private int wander() {
-		//System.out.println("wandering");
 		num = rand.nextFloat();
 		if (num < .25) {
 			input = 0;
@@ -88,36 +95,63 @@ public class AI extends Component implements InputComponent {
 		
 		return input;
 	}
-	
+
+	// every .5 seconds calculate playerPos and change direction
 	private int chase(Vector2 myPos, Vector2 playerPos) {
-		// every .5 seconds calculate playerPos and change direction
-		int npcXTile = (int)myPos.x / 32;
-		int npcYTile = (int)myPos.y / 32;
+		npcXTile = (int)myPos.x / 32;
+		npcYTile = (int)myPos.y / 32;
 		
-		int playerXTile = (int)playerPos.x / 32;
-		int playerYTile = (int)playerPos.y / 32;
+		playerXTile = (int)playerPos.x / 32;
+		playerYTile = (int)playerPos.y / 32;
 		
+		deltaY = npcYTile-playerYTile;
+		deltaX = npcXTile-playerXTile;
 		
-		if (TimeUtils.timeSinceMillis(lastTime) > 500) {
-			if ((npcYTile - playerYTile) < 0) {
-				input = 0;
-			} else if ((npcYTile - playerYTile) > 0) {
-				input = 1;
-			} else if ((npcXTile - playerXTile) > 0) {
-				input = 2;
-			} else if ((npcXTile - playerXTile) < 0) {
-				input = 3;
-			} else {
-				input = -1;
-				System.out.println("Caught player");
-			}
+		boolean chasing = false;
+		boolean attacking = false;
+		
+		// check if player is within attack range
+		// if so, stop chasing/moving and attack
+		if (Math.abs(myPos.x-playerPos.x) < attackRange && 
+				Math.abs(myPos.y-playerPos.y) < attackRange) {
+			chasing = false;
+			attacking = true;
+			attack();
+			input = -1;
+		}
+		
+		// check if enemy is not chasing and not attacking
+		// if true, get new input
+		// chasing is reset every *arbitrary unit of seconds*
+		// to allow for direction change and simulated intelligence
+		if (!chasing && !attacking) {
 			lastTime = TimeUtils.millis();
-		} else {
-			System.out.println("Player found");
+			if (Math.abs(deltaY) > Math.abs(deltaX)) {
+				if (deltaY < 0) {	// if deltaY is negative, player is higher 
+					input = 0;		// move up
+				} else input = 1;	// else move down
+			} else {
+				if (deltaX < 0) {	// if deltaX is negative, player is righter
+					input = 3;		// move right
+				} else input = 2;	// else move left
+			}
+			chasing = true;
+		} else if (chasing){
+			if (TimeUtils.timeSinceMillis(lastTime) > 2000) {
+				lastTime = TimeUtils.millis();
+				chasing = false;
+			}
 		}
 			return input;
 	}
 	
+	// clearly lackluster attack method
+	private void attack() {
+		System.out.println("Attacking!");
+		
+	}
+	
+	// basic move method, handled now by input instead of graphics
 	private void move(int input)
 	  {
 		float delta = getParent().getComponent(EnemyStatComponent.class).getMoveSpeed();

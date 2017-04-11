@@ -5,8 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.components.physicsComponent.Transform;
 import com.mygdx.game.entities.characters.Enemy;
 import com.mygdx.game.entities.characters.Player;
 import com.mygdx.game.entities.games.Game;
@@ -36,12 +34,9 @@ public class MyGdxGame extends ApplicationAdapter {
     simpleGame.addChild(new TiledWorld());
     
     Player player = new Player();
-    player.getComponent(Transform.class).setPosition(new Vector2(1000f, 1000f));
-
     simpleGame.addChild(player);
     
     Enemy enemy = new Enemy();
-    enemy.getComponent(Transform.class).setPosition(new Vector2(900f, 900f));
     simpleGame.addChild(enemy);
     
     OrthographicCamera cam = new OrthographicCamera(30, 30 * (h / w));

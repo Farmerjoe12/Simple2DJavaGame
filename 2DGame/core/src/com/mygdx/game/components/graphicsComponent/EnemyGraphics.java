@@ -10,17 +10,25 @@ import com.mygdx.game.utilities.Animator;
 
 public class EnemyGraphics extends Component implements GraphicsComponent {
   private Animator[] animSet;
-  private Animator currAnimation = null;
-  private int input;
-  private int lastDir = 1;
+  private Animator currAnimation;
+  private int input, lastDir;
 
+  /**
+   * EnemyGraphics is solely responsible for drawing the animations and sprites
+   * -- as it should be
+   */
   public EnemyGraphics() {
     // createAnimSet takes parameters for row on the spritesheet and set
     // of sprites, the top leftmost set is row 0, set 0 increasing
     // down and to the right
     createAnimSet(12, 0);
+    currAnimation = null;
+    lastDir = 1;
   }
 
+  // draw gets the input as well as current location
+  // then draws the animation or last frame depending on if moving or not
+  // which is determined by input
   @Override
   public void draw(SpriteBatch batch) {
     float x = getParent().getComponent(Transform.class).getPosition().x;
@@ -38,14 +46,15 @@ public class EnemyGraphics extends Component implements GraphicsComponent {
 	
   }
   
-  public Animator getCurrentAnimation(int input) {
+  private Animator getCurrentAnimation(int input) {
     if (input >= 0) {
       lastDir = input;
       return animSet[input];
     } else
       return null;
   }
-  public void createAnimSet(int spriteRow, int spriteSet) {
+  
+  private void createAnimSet(int spriteRow, int spriteSet) {
     int startSprite = spriteSet * 8;
     int endSprite = startSprite + 1;
 

@@ -28,13 +28,12 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
 
   @Override
   public void draw(SpriteBatch batch) {
-    input = getParent().getComponent(PlayerInput.class).handleInput();
-    //lastDir = input;
     float x = getParent().getComponent(Transform.class).getPosition().x;
     float y = getParent().getComponent(Transform.class).getPosition().y;
+
+    input = getParent().getComponent(PlayerInput.class).handleInput();
     
-    if (!getParent().getComponent(Collide.class).isBlocked(input))
-    {
+    if (!getParent().getComponent(Collide.class).isBlocked(input)) {
     	move(input);
     }
     
@@ -47,7 +46,7 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
     }
   }
   
-  public void move(int input)
+  private void move(int input)
   {
 	  delta = getParent().getComponent(PlayerStatComponent.class).getMoveSpeed();
 	  switch (input) {
@@ -63,7 +62,7 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
 	  }
   }
 
-  public Animator getCurrentAnimation(int input) {
+  private Animator getCurrentAnimation(int input) {
     if (input >= 0) {
       lastDir = input;
       return animSet[input];
@@ -71,11 +70,7 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
       return null;
   }
 
-  public void updateSpritePositions() {
-
-  }
-
-  public void createAnimSet(int spriteRow, int spriteSet) {
+  private void createAnimSet(int spriteRow, int spriteSet) {
     int startSprite = spriteSet * 8;
     int endSprite = startSprite + 1;
 
@@ -85,12 +80,4 @@ public class PlayerGraphics extends Component implements GraphicsComponent {
     animSet[2] = new Animator(spriteRow, startSprite + 4, endSprite + 4); // LEFT
     animSet[3] = new Animator(spriteRow, startSprite + 6, endSprite + 6); // RIGHT
   }
-
-public int getInput() {
-	return input;
-}
-
-public void setInput(int input) {
-	this.input = input;
-}
 }

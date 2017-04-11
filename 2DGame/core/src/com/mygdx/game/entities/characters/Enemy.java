@@ -9,8 +9,9 @@ import com.mygdx.game.components.statComponent.EnemyStatComponent;
 
 public class Enemy extends Character {
 
+	// location of char is passed at creation of transform
 	public Enemy()  /** Number 1 **/ {
-		addComponent(new Transform(0, 0));
+		addComponent(new Transform(900, 900));
 		addComponent(new EnemyStatComponent());
 		addComponent(new EnemyGraphics());
 		addComponent(new AI());
