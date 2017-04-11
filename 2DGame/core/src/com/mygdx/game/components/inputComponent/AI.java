@@ -20,7 +20,9 @@ public class AI extends Component implements InputComponent {
 	int input;
 	float num;
 	private Random rand;
-	int range = 50;
+	int range = 500;
+	float diffX;
+	float diffY;
 	Vector2 playerPos;
 	Vector2 myPos;
 	Vector2 diff;
@@ -73,7 +75,7 @@ public class AI extends Component implements InputComponent {
 		return false;
 	}
 	private int wander() {
-		System.out.println("wandering");
+		//System.out.println("wandering");
 		num = rand.nextFloat();
 		if (num < .25) {
 			input = 0;
@@ -89,18 +91,23 @@ public class AI extends Component implements InputComponent {
 	
 	private int chase(Vector2 myPos, Vector2 playerPos) {
 		// every .5 seconds calculate playerPos and change direction
-		diff = myPos.sub(playerPos);
+		int npcXTile = (int)myPos.x / 32;
+		int npcYTile = (int)myPos.y / 32;
+		
+		int playerXTile = (int)playerPos.x / 32;
+		int playerYTile = (int)playerPos.y / 32;
+		
+		
 		if (TimeUtils.timeSinceMillis(lastTime) > 500) {
-			if (diff.y > 0) {
+			if ((npcYTile - playerYTile) < 0) {
 				input = 0;
-			} else if (diff.y < 0) {
+			} else if ((npcYTile - playerYTile) > 0) {
 				input = 1;
-			} else if (diff.x > 0) {
+			} else if ((npcXTile - playerXTile) > 0) {
 				input = 2;
-			} else if (diff.x < 0) {
+			} else if ((npcXTile - playerXTile) < 0) {
 				input = 3;
 			} else {
-				input = -1;
 				System.out.println("Caught player");
 			}
 			lastTime = TimeUtils.millis();
