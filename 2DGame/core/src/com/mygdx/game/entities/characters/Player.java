@@ -12,22 +12,22 @@ import com.mygdx.game.components.statComponent.PlayerStatComponent;
  * Created by Jacob on 3/29/2017.
  */
 public class Player extends Character {
-	
-	// location of char is passed at creation of transform
-	public Player() {
-		Transform transform = new Transform(1300, 800);
-		addComponent(transform);
-		addComponent(new PlayerStatComponent());
-		addComponent(new PlayerGraphics());
-		addComponent(new PlayerInput());
-		addComponent(new Collide());
-	}
 
-	@Override
-	public void draw(SpriteBatch b) {
-		b.setProjectionMatrix(MyGdxGame.simpleGame.getCamera().combined);
-		getComponent(PlayerGraphics.class).draw(b);
-	}
+  public Player() {
+    Transform transform = new Transform(900, 900);
+    addComponent(transform);
+    addComponent(new PlayerStatComponent());
+    addComponent(new PlayerGraphics());
+    addComponent(new PlayerInput());
+    addComponent(new Collide());
+  }
+
+  @Override
+  public void draw(SpriteBatch b) {
+    b.setProjectionMatrix(MyGdxGame.currentGame.getCamera().combined);
+    getComponent(PlayerGraphics.class).draw(b);
+  }
+
 
 	@Override
 	public void tick() {

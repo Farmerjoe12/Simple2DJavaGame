@@ -3,8 +3,10 @@ package com.mygdx.game.utilities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.MyGdxGame;
 
 /**
  * Animator is used to provide the animations for the sprites
@@ -24,14 +26,16 @@ public class Animator {
   private static SpriteBatch spriteBatch;
   private float stateTime;
   private float frameTime;
+  private int startIndex;
 
 
   public Animator(int row, int startSprite, int endSprite) {
 
     // frameTime controls the speed of the animation, lower is faster
+    startIndex = startSprite;
     frameTime = 0.2f;
 
-    walkSheet = new Texture(Gdx.files.internal("lastguardian_all.png"));
+    walkSheet = MyGdxGame.getAssetManager().get("lastguardian_all.png");
 
     // this array is populated with individual indexes of sprites from the
     // sprite sheet to make them easily accessible
@@ -46,8 +50,8 @@ public class Animator {
     walkFrames[1] = tmp[row][endSprite];
 
     walkAnimation = new Animation<TextureRegion>(frameTime, walkFrames);
+    walkAnimation.setPlayMode(PlayMode.LOOP);
 
-    spriteBatch = new SpriteBatch();
     stateTime = 0f;
   }
 
@@ -58,11 +62,15 @@ public class Animator {
   }
 
   public static void dispose() {
-    spriteBatch.dispose();
     walkSheet.dispose();
   }
 
   public TextureRegion getLastFrame() {
     return walkFrames[1];
+  }
+
+  public int getColumn() {
+    stateTime += Gdx.graphics.getDeltaTime();
+    return startIndex + walkAnimation.getKeyFrameIndex(stateTime);
   }
 }

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.MyGdxGame;
 
@@ -21,22 +20,24 @@ public class TiledWorld extends World {
 
   public TiledWorld() {
     // loading in Tiled map, initializing the renderer
-    tiledMap = new TmxMapLoader().load("2.tmx");
+    tiledMap = MyGdxGame.getAssetManager().get("2.tmx");
     tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
     prop = tiledMap.getProperties();
   }
   
   public void draw(SpriteBatch batch) {
-	  
+    tiledMapRenderer.setView(MyGdxGame.currentGame.getCamera());
+    tiledMapRenderer.render();
   }
 
   public void drawBackground(SpriteBatch batch) {
-    tiledMapRenderer.setView(MyGdxGame.simpleGame.getCamera());
+    tiledMapRenderer.setView(MyGdxGame.currentGame.getCamera());
     tiledMapRenderer.render(backgroundLayers);
+
   }
 
   public void drawForeground(SpriteBatch batch) {
-	tiledMapRenderer.setView(MyGdxGame.simpleGame.getCamera());
+	tiledMapRenderer.setView(MyGdxGame.currentGame.getCamera());
 	tiledMapRenderer.render(foregroundLayers);
   }
   public MapProperties getProp() {

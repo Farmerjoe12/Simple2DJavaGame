@@ -2,13 +2,13 @@ package com.mygdx.game.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.components.Component;
-
 import java.util.ArrayList;
 
 /**
  * Created by Jacob on 3/29/2017.
  */
 public abstract class Entity {
+  private int id = (int)(Math.random()*Integer.MAX_VALUE);
   private final int MAX_COMPONENTS = 10;
   private ArrayList<Component> components = new ArrayList<Component>();
   private ArrayList<Entity> children = new ArrayList<Entity>();
@@ -20,32 +20,22 @@ public abstract class Entity {
 
   public abstract void draw(SpriteBatch b);
 
-  @SuppressWarnings("unchecked")
   public <T extends Component> T getComponent(Class<T> toGet) {
     for (Component c : components) {
       if (toGet.isInstance(c)) {
         return toGet.cast(c);
       }
     }
-
-    return (T) new Component() {};
+    return null;
   }
 
-  @SuppressWarnings("unchecked")
   public <T extends Entity> T getChild(Class<T> toGet) {
-
     for (Entity e : children) {
       if (toGet.isInstance(e)) {
         return toGet.cast(e);
       }
     }
-
-    return (T) new Entity() {
-      @Override
-      public void draw(SpriteBatch b) {
-
-      }
-    };
+    return null;
   }
 
   public void addComponent(Component c) {
@@ -84,4 +74,13 @@ public abstract class Entity {
   public void removeChild(Entity e) {
     children.remove(e);
   }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
 }

@@ -39,7 +39,7 @@ public class AI extends Component implements InputComponent {
 	
 	@Override
 	public int handleInput() {
-		playerPos = MyGdxGame.simpleGame.getChild(Player.class).getComponent(Transform.class).getPosition();
+		playerPos = MyGdxGame.currentGame.getChild(Player.class).getComponent(Transform.class).getPosition();
 		myPos = getParent().getComponent(Transform.class).getPosition();
 
 		// checking if player is within range of enemy,

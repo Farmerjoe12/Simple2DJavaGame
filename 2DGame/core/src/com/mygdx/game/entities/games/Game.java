@@ -1,5 +1,6 @@
 package com.mygdx.game.entities.games;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,6 +16,7 @@ import com.mygdx.game.entities.worlds.TiledWorld;
  * Created by Jacob on 3/29/2017.
  */
 public abstract class Game extends Entity {
+
   private OrthographicCamera camera;
 
   public void setCamera(OrthographicCamera camera) {
@@ -37,8 +39,8 @@ public abstract class Game extends Entity {
 
   }
 
-  private void checkMapBorders() {
-    Player player = MyGdxGame.simpleGame.getChild(Player.class);
+  protected void checkMapBorders() {
+    Player player = MyGdxGame.currentGame.getChild(Player.class);
     MapProperties prop = getChild(TiledWorld.class).getProp();
     // get Tiled map properties
     int mapWidth = prop.get("width", Integer.class);
