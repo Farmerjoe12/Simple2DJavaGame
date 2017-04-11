@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
@@ -38,8 +39,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
   public static ButtonListener listener = new ButtonListener();
   static AssetManager assetManager = new AssetManager();
- // public static Simple2DJavaGameSingleplayer simple2DJavaGameSingleplayer;
-  public static Simple2DJavaGameMultiplayer simple2DJavaGameMultiplayer;
+  public static Simple2DJavaGameSingleplayer simple2DJavaGameSingleplayer;
+  //public static Simple2DJavaGameMultiplayer simple2DJavaGameMultiplayer;
   public static Game currentGame;
   SpriteBatch batch;
   OrthographicCamera cam;
@@ -53,9 +54,10 @@ public class MyGdxGame extends ApplicationAdapter {
     float w = Gdx.graphics.getWidth();
     float h = Gdx.graphics.getHeight();
 
-    //simple2DJavaGameSingleplayer = new Simple2DJavaGameSingleplayer();
-    simple2DJavaGameMultiplayer = new Simple2DJavaGameMultiplayer();
-    currentGame = simple2DJavaGameMultiplayer;
+    simple2DJavaGameSingleplayer = new Simple2DJavaGameSingleplayer();
+    //simple2DJavaGameMultiplayer = new Simple2DJavaGameMultiplayer();
+
+
 
     cam = new OrthographicCamera(30, 30 * (h / w));
     cam.setToOrtho(false, 960, 640);
@@ -65,7 +67,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
     Gdx.input.setInputProcessor(listener);
 
-    simple2DJavaGameMultiplayer.addComponent(new MultiplayerInput());
+    //simple2DJavaGameMultiplayer.addComponent(new MultiplayerInput());
   }
 
   @Override
@@ -91,7 +93,7 @@ public class MyGdxGame extends ApplicationAdapter {
   @Override
   public void dispose() {
     assetManager.dispose();
-    simple2DJavaGameMultiplayer.dispose();
+    //simple2DJavaGameMultiplayer.dispose();
   }
 
   public void loadAssets() {

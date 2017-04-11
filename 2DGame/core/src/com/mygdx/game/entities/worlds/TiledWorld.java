@@ -13,7 +13,10 @@ import com.mygdx.game.MyGdxGame;
 public class TiledWorld extends World {
   public TiledMap tiledMap;
   TiledMapRenderer tiledMapRenderer;
-  MapProperties prop;
+  public MapProperties prop;
+
+  int[] backgroundLayers = {0, 1};
+  int[] foregroundLayers = {2};
 
   public TiledWorld() {
     // loading in Tiled map, initializing the renderer
@@ -21,13 +24,24 @@ public class TiledWorld extends World {
     tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
     prop = tiledMap.getProperties();
   }
-
+  
   public void draw(SpriteBatch batch) {
     tiledMapRenderer.setView(MyGdxGame.currentGame.getCamera());
     tiledMapRenderer.render();
   }
 
+  public void drawBackground(SpriteBatch batch) {
+    tiledMapRenderer.setView(MyGdxGame.currentGame.getCamera());
+    tiledMapRenderer.render(backgroundLayers);
+
+  }
+
+  public void drawForeground(SpriteBatch batch) {
+	tiledMapRenderer.setView(MyGdxGame.currentGame.getCamera());
+	tiledMapRenderer.render(foregroundLayers);
+  }
   public MapProperties getProp() {
     return prop;
   }
+
 }

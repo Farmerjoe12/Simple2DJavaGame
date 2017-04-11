@@ -18,7 +18,7 @@ public class MultiplayerInput extends Component implements InputComponent {
   Simple2DJavaGameMultiplayer parent;
 
   public MultiplayerInput(){
-    parent = MyGdxGame.simple2DJavaGameMultiplayer;
+    //parent = MyGdxGame.simple2DJavaGameMultiplayer;
     mapper = new InputMapper();
     mapper.mapCommand(new Integer[]{Input.Keys.UP},new Command() {
       @Override

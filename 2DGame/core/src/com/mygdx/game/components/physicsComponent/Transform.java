@@ -9,7 +9,7 @@ import com.mygdx.game.components.Component;
 public class Transform extends Component {
   public float rotation = 0f;
   public float scale = 1f;
-  Vector2 position = new Vector2(0, 0);
+  Vector2 position = new Vector2();
   Vector2 velocity = new Vector2(0, 0);
   Vector2 acceleration = new Vector2(0, 0);
 
@@ -21,8 +21,7 @@ public class Transform extends Component {
     position = new Vector2(x, y);
   }
 
-  // deltaX and deltaY are the actual movement methods called
-  // from the input components
+  // deltaX and deltaY are the actual movement methods
   public void deltaX(float dx) {
     position.x += dx;
   }
@@ -54,6 +53,14 @@ public class Transform extends Component {
 
   public void setPosition(Vector2 position) {
     this.position = position;
+  }
+  
+  public void setX(float x) {
+	  this.position.x = x;
+  }
+  
+  public void setY(float y) {
+	  this.position.y = y;
   }
 
   public Vector2 getVelocity() {

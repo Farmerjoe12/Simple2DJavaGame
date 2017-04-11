@@ -28,8 +28,7 @@ public abstract class Entity {
         return toGet.cast(c);
       }
     }
-
-    return (T) new Component() {};
+    return null;
   }
 
   public <T extends Entity> T getChild(Class<T> toGet) {
@@ -38,13 +37,7 @@ public abstract class Entity {
         return toGet.cast(e);
       }
     }
-
-    return (T) new Entity() {
-      @Override
-      public void draw(SpriteBatch b) {
-
-      }
-    };
+    return null;
   }
 
   public void addComponent(Component c) {
