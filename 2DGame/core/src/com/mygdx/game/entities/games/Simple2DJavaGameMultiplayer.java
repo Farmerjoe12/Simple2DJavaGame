@@ -177,18 +177,20 @@ public class Simple2DJavaGameMultiplayer extends Game {
   @Override
   public void draw(SpriteBatch batch) {
 
-    getChild(TiledWorld.class).draw(batch);
-
+    //getChild(TiledWorld.class).draw(batch);
+	  
+	  getChild(TiledWorld.class).drawBackground(batch);
     TextureRegion[][] tmp;
     batch.setProjectionMatrix(getCamera().combined);
     for(String[] s : drawables) {
       final int FRAME_COLS = 32, FRAME_ROWS = 23;
-      Texture walkSheet = MyGdxGame.getAssetManager().get("lastguardian_all.png");
+      Texture walkSheet = MyGdxGame.getAssetManager().get("assets/lastguardian_all.png");
       tmp = TextureRegion.split(walkSheet, walkSheet.getWidth() / FRAME_COLS,
           walkSheet.getHeight() / FRAME_ROWS);
       batch.begin();
       batch.draw(tmp[Integer.parseInt(s[5])][Integer.parseInt(s[6])],Float.parseFloat(s[3]),Float.parseFloat(s[4]));
       batch.end();
+      getChild(TiledWorld.class).drawForeground(batch);
     }
 
   }
