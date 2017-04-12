@@ -30,7 +30,7 @@ public class Simple2DJavaGameMultiplayer extends Game {
 	String[] player;
 
 	public Simple2DJavaGameMultiplayer() {
-		MyGdxGame.currentGame = this;
+		super();
 		new KryonetServer();
 		TiledWorld tiledWorld = new TiledWorld();
 		addChild(tiledWorld);
@@ -182,7 +182,7 @@ public class Simple2DJavaGameMultiplayer extends Game {
 		TextureRegion[][] tmp;
 		batch.setProjectionMatrix(getCamera().combined);
 		for(String[] s : drawables) {
-			Texture walkSheet = MyGdxGame.getAssetManager().get("assets/lastguardian_all.png");
+			Texture walkSheet = MyGdxGame.getAssetManager().get("lastguardian_all.png");
 			tmp = TextureRegion.split(walkSheet, walkSheet.getWidth() / Animator.FRAME_COLS,
 					walkSheet.getHeight() / Animator.FRAME_ROWS);
 			batch.begin();

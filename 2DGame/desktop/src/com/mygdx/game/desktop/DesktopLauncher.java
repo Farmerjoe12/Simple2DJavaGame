@@ -10,7 +10,7 @@ public class DesktopLauncher {
     config.title = "2D Java Game";
     config.width = 960;
     config.height = 640;
-    new LwjglApplication(new MyGdxGame(), config);
-
+    new LwjglApplication(new MyGdxGame(), config); 
   }
+
 }

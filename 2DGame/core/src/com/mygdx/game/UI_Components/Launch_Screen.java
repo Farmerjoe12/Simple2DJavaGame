@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.entities.games.Game;
+import com.mygdx.game.entities.games.Simple2DJavaGameMultiplayer;
 import com.mygdx.game.entities.games.Simple2DJavaGameSingleplayer;
 
 /**
@@ -58,6 +59,14 @@ public class Launch_Screen extends Game{
 		multiPlay.setHeight(50);
 		multiPlay.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2-50, Align.center);
 		stage.addActor(multiPlay);
+		multiPlay.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				stage.dispose();
+				skin.dispose();
+				new Simple2DJavaGameMultiplayer();
+			}
+		});
 		
 		Gdx.input.setInputProcessor(stage);
 		// Add widgets to the table here.
