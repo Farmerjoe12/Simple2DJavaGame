@@ -1,5 +1,6 @@
 package com.mygdx.game.entities.games;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.components.physicsComponent.Transform;
@@ -26,10 +27,11 @@ public class Simple2DJavaGameSingleplayer extends Game {
     addChild(enemy);
     player.getComponent(Transform.class).setPosition(new Vector2(450f, 900f));
     addChild(player);
+    Gdx.graphics.setContinuousRendering(true);
   }
   
   public void tick() {
-	  updateCamera();
+    updateCamera();
   }
   
   public void draw(SpriteBatch batch) {

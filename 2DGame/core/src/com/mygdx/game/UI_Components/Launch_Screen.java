@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -28,19 +28,20 @@ import com.mygdx.game.entities.games.Simple2DJavaGameSingleplayer;
 public class Launch_Screen extends Game{
 
 	private Stage stage;
-	private Table table;
 	private Skin skin;
 	private TextButton singlePlay, multiPlay;
+	private Dialog title;
 
 	public Launch_Screen() {
 		MyGdxGame.currentGame = this;
 		skin = new Skin(Gdx.files.internal("uiskin.json"));
 		stage = new Stage(new ScreenViewport());
-		table = new Table();
-		table.setWidth(stage.getWidth());
-		table.align(Align.center | Align.top);
 		
-		table.setPosition(0,Gdx.graphics.getHeight());
+		title = new Dialog("Welcome to the game!", skin);
+		title.setWidth(200);
+		title.setPosition(Gdx.graphics.getWidth()/2+10, Gdx.graphics.getHeight()/2 + 100, Align.center);
+		stage.addActor(title);
+		
 		singlePlay = new TextButton("Singleplayer", skin, "default");
 		singlePlay.setWidth(200);
 		singlePlay.setHeight(50);
@@ -69,7 +70,7 @@ public class Launch_Screen extends Game{
 		});
 		
 		Gdx.input.setInputProcessor(stage);
-		// Add widgets to the table here.
+		Gdx.graphics.setContinuousRendering(false);
 	}
 	
 	public void resize (int width, int height) {

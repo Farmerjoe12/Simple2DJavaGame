@@ -1,5 +1,6 @@
 package com.mygdx.game.entities.games;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -74,7 +75,7 @@ public class Simple2DJavaGameMultiplayer extends Game {
 
 
 		addComponent(new MultiplayerInput());
-
+		Gdx.graphics.setContinuousRendering(true);
 
 	}
 
