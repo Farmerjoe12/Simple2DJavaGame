@@ -1,19 +1,16 @@
 package com.mygdx.game.components.inputComponent;
 
 
-import com.badlogic.gdx.Gdx;
-
+import java.util.ArrayList;
 
 import com.badlogic.gdx.Input;
-import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.Component;
-
 import com.mygdx.game.components.physicsComponent.Collide;
 import com.mygdx.game.components.physicsComponent.Transform;
 import com.mygdx.game.components.statComponent.PlayerStatComponent;
-import com.mygdx.game.utilities.InputMapper;
+import com.mygdx.game.entities.games.Game;
 import com.mygdx.game.utilities.Command;
-import java.util.ArrayList;
+import com.mygdx.game.utilities.InputMapper;
 
 
 /**
@@ -134,7 +131,7 @@ public class PlayerInput extends Component implements InputComponent {
 
   @Override
   public int handleInput() {
-    ArrayList<Integer> buttonsList = MyGdxGame.listener.getKeysPressed();
+    ArrayList<Integer> buttonsList = Game.listener.getKeysPressed();
     if(mapper.containsCommand(buttonsList)){
       mapper.getCommand(buttonsList).executeCommand();
       return currentDirection;

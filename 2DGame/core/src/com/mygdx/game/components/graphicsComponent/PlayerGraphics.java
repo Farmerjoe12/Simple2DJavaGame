@@ -3,9 +3,7 @@ package com.mygdx.game.components.graphicsComponent;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.components.Component;
 import com.mygdx.game.components.inputComponent.PlayerInput;
-import com.mygdx.game.components.physicsComponent.Collide;
 import com.mygdx.game.components.physicsComponent.Transform;
-import com.mygdx.game.components.statComponent.PlayerStatComponent;
 import com.mygdx.game.utilities.Animator;
 
 /**
