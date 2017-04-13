@@ -9,8 +9,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.mygdx.game.UI_Components.Launch_Screen;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.entities.games.Game;
+import com.mygdx.game.screens.Launch_Screen;
 
 /**
  * This is the main class that runs the program, all game logic and rendering 
@@ -50,7 +51,8 @@ public class MyGdxGame extends ApplicationAdapter {
       //asset manager is done loading
     }
     else {
-      //to-do: put a loading bar here once we have enough assets that load time is non-negligible
+      //to-do: put a loading bar here once we have enough assets that 
+	// load time is non-negligible
       //asset manager is loading
     }
     
@@ -65,10 +67,14 @@ public class MyGdxGame extends ApplicationAdapter {
 
   public void loadAssets() {
     assetManager.load("lastguardian_all.png", Texture.class);
-    assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+    assetManager.setLoader(TiledMap.class, 
+	    new TmxMapLoader(new InternalFileHandleResolver()));
     assetManager.load("1.tmx", TiledMap.class);
     assetManager.load("2.tmx", TiledMap.class);
     assetManager.load("21.tmx", TiledMap.class);
+    assetManager.load("uiskin.atlas", Skin.class);
+    assetManager.load("uiskin.json", Skin.class);
+    assetManager.load("uiskin.png", Skin.class);
     assetManager.finishLoading();
   }
 
