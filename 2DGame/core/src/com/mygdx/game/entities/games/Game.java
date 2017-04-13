@@ -1,8 +1,7 @@
 package com.mygdx.game.entities.games;
 
-import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
 import com.mygdx.game.MyGdxGame;
@@ -10,6 +9,7 @@ import com.mygdx.game.components.physicsComponent.Transform;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.characters.Player;
 import com.mygdx.game.entities.worlds.TiledWorld;
+import com.mygdx.game.utilities.ButtonListener;
 
 
 /**
@@ -17,66 +17,71 @@ import com.mygdx.game.entities.worlds.TiledWorld;
  */
 public abstract class Game extends Entity {
 
-  private OrthographicCamera camera;
+	private OrthographicCamera camera;
+	public static ButtonListener listener = new ButtonListener();
+	
+	// This constructor allows the switching of games between SP, MP, and Load_Screen
+	public Game() {
+		MyGdxGame.currentGame = this;
+		MyGdxGame.currentGame.setCamera(MyGdxGame.cam);
+		Gdx.input.setInputProcessor(listener);
+	}
+	public void setCamera(OrthographicCamera camera) {
+		this.camera = camera;
+	}
 
-  public void setCamera(OrthographicCamera camera) {
-    this.camera = camera;
-  }
+	public OrthographicCamera getCamera() {
+		return camera;
+	}
 
-  public OrthographicCamera getCamera() {
-    return camera;
-  }
+	public abstract void draw(SpriteBatch batch);
 
-  public abstract void draw(SpriteBatch batch);
+	public void updateCamera() {
+		float x = getChild(Player.class).getComponent(Transform.class).getPosition().x + 16;
+		float y = getChild(Player.class).getComponent(Transform.class).getPosition().y + 16;
+		camera.position.set(x, y, 0);
+		checkMapBorders();
+		camera.update();
+	}
 
-  public void updateCamera() {
+	protected void checkMapBorders() {
+		Player player = MyGdxGame.currentGame.getChild(Player.class);
+		MapProperties prop = getChild(TiledWorld.class).getProp();
+		// get Tiled map properties
+		int mapWidth = prop.get("width", Integer.class);
+		int mapHeight = prop.get("height", Integer.class);
+		int tilePixelWidth = prop.get("tilewidth", Integer.class);
+		int tilePixelHeight = prop.get("tileheight", Integer.class);
 
-    float x = getChild(Player.class).getComponent(Transform.class).getPosition().x + 16;
-    float y = getChild(Player.class).getComponent(Transform.class).getPosition().y + 16;
-    camera.position.set(x, y, 0);
-    checkMapBorders();
-    camera.update();
+		// 'width' and 'height' supply the amount of tiles in each row/column,
+		// so you must multiply it by the tile width in order to get the map dimensions
+		int mapPixelWidth = mapWidth * tilePixelWidth;
+		int mapPixelHeight = mapHeight * tilePixelHeight;
 
-  }
+		// determine when the camera will reach the ends of the map
+		float viewportMinX = camera.viewportWidth / 2;
+		float viewportMinY = camera.viewportHeight / 2;
+		float viewportMaxX = mapPixelWidth - viewportMinX;
+		float viewportMaxY = mapPixelHeight - viewportMinY;
 
-  protected void checkMapBorders() {
-    Player player = MyGdxGame.currentGame.getChild(Player.class);
-    MapProperties prop = getChild(TiledWorld.class).getProp();
-    // get Tiled map properties
-    int mapWidth = prop.get("width", Integer.class);
-    int mapHeight = prop.get("height", Integer.class);
-    int tilePixelWidth = prop.get("tilewidth", Integer.class);
-    int tilePixelHeight = prop.get("tileheight", Integer.class);
+		float x = player.getComponent(Transform.class).getPosition().x;
+		float y = player.getComponent(Transform.class).getPosition().y;
 
-    // 'width' and 'height' supply the amount of tiles in each row/column,
-    // so you must multiply it by the tile width in order to get the map dimensions
-    int mapPixelWidth = mapWidth * tilePixelWidth;
-    int mapPixelHeight = mapHeight * tilePixelHeight;
+		// preventing the camera from scrolling past the edge of the map
+		if (x < viewportMinX) {
+			camera.position.x = viewportMinX;
+		} else if (x > viewportMaxX) {
+			camera.position.x = viewportMaxX;
+		} else {
+			camera.position.x = x;
+		}
 
-    // determine when the camera will reach the ends of the map
-    float viewportMinX = camera.viewportWidth / 2;
-    float viewportMinY = camera.viewportHeight / 2;
-    float viewportMaxX = mapPixelWidth - viewportMinX;
-    float viewportMaxY = mapPixelHeight - viewportMinY;
-
-    float x = player.getComponent(Transform.class).getPosition().x;
-    float y = player.getComponent(Transform.class).getPosition().y;
-
-    // preventing the camera from scrolling past the edge of the map
-    if (x < viewportMinX) {
-      camera.position.x = viewportMinX;
-    } else if (x > viewportMaxX) {
-      camera.position.x = viewportMaxX;
-    } else {
-      camera.position.x = x;
-    }
-
-    if (y < viewportMinY) {
-      camera.position.y = viewportMinY;
-    } else if (y > viewportMaxY) {
-      camera.position.y = viewportMaxY;
-    } else {
-      camera.position.y = y;
-    }
-  }
+		if (y < viewportMinY) {
+			camera.position.y = viewportMinY;
+		} else if (y > viewportMaxY) {
+			camera.position.y = viewportMaxY;
+		} else {
+			camera.position.y = y;
+		}
+	}
 }

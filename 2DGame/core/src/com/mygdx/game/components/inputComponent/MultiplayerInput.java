@@ -1,12 +1,13 @@
 package com.mygdx.game.components.inputComponent;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Input;
-import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.Component;
+import com.mygdx.game.entities.games.Game;
 import com.mygdx.game.entities.games.Simple2DJavaGameMultiplayer;
 import com.mygdx.game.utilities.Command;
 import com.mygdx.game.utilities.InputMapper;
-import java.util.ArrayList;
 
 /**
  * Created by Jacob on 4/7/2017.
@@ -23,7 +24,7 @@ public class MultiplayerInput extends Component implements InputComponent {
       @Override
       public String executeCommand() {
         parent = ((Simple2DJavaGameMultiplayer)getParent());
-        ArrayList<Integer> buttonsList = MyGdxGame.listener.getKeysPressed();
+        ArrayList<Integer> buttonsList = Game.listener.getKeysPressed();
         Integer[] buttons = new Integer[buttonsList.size()];
         for(int i = 0; i < buttons.length; i++){
           buttons[i] = buttonsList.get(i);
@@ -36,7 +37,7 @@ public class MultiplayerInput extends Component implements InputComponent {
       @Override
       public String executeCommand() {
         parent = ((Simple2DJavaGameMultiplayer)getParent());
-        ArrayList<Integer> buttonsList = MyGdxGame.listener.getKeysPressed();
+        ArrayList<Integer> buttonsList = Game.listener.getKeysPressed();
         Integer[] buttons = new Integer[buttonsList.size()];
         for(int i = 0; i < buttons.length; i++){
           buttons[i] = buttonsList.get(i);
@@ -49,7 +50,7 @@ public class MultiplayerInput extends Component implements InputComponent {
       @Override
       public String executeCommand() {
         parent = ((Simple2DJavaGameMultiplayer)getParent());
-        ArrayList<Integer> buttonsList = MyGdxGame.listener.getKeysPressed();
+        ArrayList<Integer> buttonsList = Game.listener.getKeysPressed();
         Integer[] buttons = new Integer[buttonsList.size()];
         for(int i = 0; i < buttons.length; i++){
           buttons[i] = buttonsList.get(i);
@@ -62,7 +63,7 @@ public class MultiplayerInput extends Component implements InputComponent {
       @Override
       public String executeCommand() {
         parent = ((Simple2DJavaGameMultiplayer)getParent());
-        ArrayList<Integer> buttonsList = MyGdxGame.listener.getKeysPressed();
+        ArrayList<Integer> buttonsList = Game.listener.getKeysPressed();
         Integer[] buttons = new Integer[buttonsList.size()];
         for(int i = 0; i < buttons.length; i++){
           buttons[i] = buttonsList.get(i);
@@ -76,7 +77,7 @@ public class MultiplayerInput extends Component implements InputComponent {
   @Override
   public int handleInput() {
 
-    ArrayList<Integer> buttonsList = MyGdxGame.listener.getKeysPressed();
+    ArrayList<Integer> buttonsList = Game.listener.getKeysPressed();
     if(mapper.containsCommand(buttonsList)){
       mapper.getCommand(buttonsList).executeCommand();
     }

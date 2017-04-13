@@ -27,10 +27,4 @@ public class Player extends Character {
     b.setProjectionMatrix(MyGdxGame.currentGame.getCamera().combined);
     getComponent(PlayerGraphics.class).draw(b);
   }
-
-
-	@Override
-	public void tick() {
-	}
-
 }

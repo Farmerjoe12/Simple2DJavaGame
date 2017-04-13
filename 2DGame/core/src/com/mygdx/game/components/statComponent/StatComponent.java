@@ -12,6 +12,7 @@ public abstract class StatComponent extends Component{
 	float experience = 100;
 	float moveSpeed = 1f;
 	float carryWeight = strength * 5; // some arbitrary value will be calculated based off of strength
+	int currentMap = 2;
 	
 	// getters
 	public int getHealth() {return health;}
@@ -21,6 +22,7 @@ public abstract class StatComponent extends Component{
 	public int getLevel() {return level;}
 	public float getEXP() {return experience;}
 	public float getMoveSpeed() {return moveSpeed;}
+	public int getMap() {return currentMap;}
 	// setters
 	public int addHealth(int toAdd) {return health += toAdd;}	
 	public int addArmor(int toAdd) {return armor += toAdd;}	
@@ -29,5 +31,6 @@ public abstract class StatComponent extends Component{
 	public int levelUP() {return level++;}	
 	public float addEXP(float toAdd) {return experience += toAdd;}	
 	public float setMoveSpeed(float newSpd) {return moveSpeed = newSpd;}	
+	public int setMap(int map) {return currentMap = map;}
 
 }
