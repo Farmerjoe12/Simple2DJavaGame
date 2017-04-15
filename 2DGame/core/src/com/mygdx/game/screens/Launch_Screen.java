@@ -39,14 +39,14 @@ public class Launch_Screen extends Screen{
     @Override
     public void create() {
 	stage = new Stage(new ScreenViewport()); 
-	TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/medieval.atlas"));
-	Skin skin = new  Skin(Gdx.files.internal("data/medieval.json"));
+	TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/Scene/medieval.atlas"));
+	Skin skin = new  Skin(Gdx.files.internal("data/Scene/medieval.json"));
 	
 	Table table = new Table();
 	table.setFillParent(true);
 	
 	batch = new SpriteBatch();
-	background = new Texture(Gdx.files.internal("data/background.png"));
+	background = new Texture(Gdx.files.internal("data/Stills/background.png"));
 	bgSprite = new Sprite(background);
 	
 	
@@ -60,7 +60,7 @@ public class Launch_Screen extends Screen{
 	multiPlay = new Button(beigeStyle);
 	Button optionButton = new Button(beigeStyle);
 	
-	BitmapFont font = new BitmapFont(Gdx.files.internal("data/prince.fnt"), Gdx.files.internal("data/medieval.png"), false);
+	BitmapFont font = new BitmapFont(Gdx.files.internal("data/Scene/prince.fnt"), Gdx.files.internal("data/Scene/princeFont.png"), false);
 	LabelStyle labelStyle = new LabelStyle(font, new Color(255f,255f,255f, 1f));
 
 	Label single = new Label("Single-Player: ", skin);
