@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.MyGdxGame;
 
@@ -20,7 +21,7 @@ public class TiledWorld extends World {
 
   public TiledWorld() {
     // loading in Tiled map, initializing the renderer
-    tiledMap = MyGdxGame.getAssetManager().get("2.tmx");
+    tiledMap = new TmxMapLoader().load("data/Maps/2.tmx");
     tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
     prop = tiledMap.getProperties();
   }

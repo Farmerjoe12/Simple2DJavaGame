@@ -33,7 +33,7 @@ public class Animator {
     startIndex = startSprite;
     frameTime = 0.2f;
 
-    walkSheet = MyGdxGame.getAssetManager().get("lastguardian_all.png");
+    walkSheet = new Texture(Gdx.files.internal("data/Chars/lastguardian_all.png"));
 
     // this array is populated with individual indexes of sprites from the
     // sprite sheet to make them easily accessible

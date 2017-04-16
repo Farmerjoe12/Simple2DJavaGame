@@ -20,12 +20,6 @@ public abstract class Game extends Entity {
 	private OrthographicCamera camera;
 	public static ButtonListener listener = new ButtonListener();
 	
-	// This constructor allows the switching of games between SP, MP, and Load_Screen
-	public Game() {
-		MyGdxGame.currentGame = this;
-		MyGdxGame.currentGame.setCamera(MyGdxGame.cam);
-		Gdx.input.setInputProcessor(listener);
-	}
 	public void setCamera(OrthographicCamera camera) {
 		this.camera = camera;
 	}
@@ -36,52 +30,5 @@ public abstract class Game extends Entity {
 
 	public abstract void draw(SpriteBatch batch);
 
-	public void updateCamera() {
-		float x = getChild(Player.class).getComponent(Transform.class).getPosition().x + 16;
-		float y = getChild(Player.class).getComponent(Transform.class).getPosition().y + 16;
-		camera.position.set(x, y, 0);
-		checkMapBorders();
-		camera.update();
-	}
-
-	protected void checkMapBorders() {
-		Player player = MyGdxGame.currentGame.getChild(Player.class);
-		MapProperties prop = getChild(TiledWorld.class).getProp();
-		// get Tiled map properties
-		int mapWidth = prop.get("width", Integer.class);
-		int mapHeight = prop.get("height", Integer.class);
-		int tilePixelWidth = prop.get("tilewidth", Integer.class);
-		int tilePixelHeight = prop.get("tileheight", Integer.class);
-
-		// 'width' and 'height' supply the amount of tiles in each row/column,
-		// so you must multiply it by the tile width in order to get the map dimensions
-		int mapPixelWidth = mapWidth * tilePixelWidth;
-		int mapPixelHeight = mapHeight * tilePixelHeight;
-
-		// determine when the camera will reach the ends of the map
-		float viewportMinX = camera.viewportWidth / 2;
-		float viewportMinY = camera.viewportHeight / 2;
-		float viewportMaxX = mapPixelWidth - viewportMinX;
-		float viewportMaxY = mapPixelHeight - viewportMinY;
-
-		float x = player.getComponent(Transform.class).getPosition().x;
-		float y = player.getComponent(Transform.class).getPosition().y;
-
-		// preventing the camera from scrolling past the edge of the map
-		if (x < viewportMinX) {
-			camera.position.x = viewportMinX;
-		} else if (x > viewportMaxX) {
-			camera.position.x = viewportMaxX;
-		} else {
-			camera.position.x = x;
-		}
-
-		if (y < viewportMinY) {
-			camera.position.y = viewportMinY;
-		} else if (y > viewportMaxY) {
-			camera.position.y = viewportMaxY;
-		} else {
-			camera.position.y = y;
-		}
-	}
+	
 }

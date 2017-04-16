@@ -1,13 +1,15 @@
 package com.mygdx.game.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
@@ -15,7 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.MyGdxGame;
 
 /**
  * Launch screen has become a valid Game screen to be drawn from MyGdxGame
@@ -26,8 +30,10 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * @author adamfarmelo
  *
  */
-public class Launch_Screen extends Screen{
+public class LaunchScreen implements Screen{
 
+    private MyGdxGame game;
+    private Screen currScreen = this;
     private Stage stage;
     private Skin skin;
     private Button singlePlay, multiPlay;
@@ -35,9 +41,9 @@ public class Launch_Screen extends Screen{
     Texture background;
     Sprite bgSprite;
 
-    @Override
-    public void create() {
-	
+    public LaunchScreen(final MyGdxGame game) {
+	this.game = game;
+
 	float w = Gdx.graphics.getWidth();
 	float h = Gdx.graphics.getHeight();
 	
@@ -81,6 +87,13 @@ public class Launch_Screen extends Screen{
 	
 	// SP button
 	singlePlay = new Button(beigeStyle);
+	singlePlay.addListener(new ChangeListener() {
+	    @Override
+	    public void changed(ChangeEvent event, Actor actor) {
+		currScreen.hide();
+		game.setScreen(new SPGameScreen(game));
+	    }	    
+	});
 	Label single = new Label("Single-Player: ", skin);
 	single.setStyle(smallStyle);
 	buttonTable.add(single).spaceBottom(20);	
@@ -99,22 +112,57 @@ public class Launch_Screen extends Screen{
 	Button optionButton = new Button(beigeStyle);
 	Label options = new Label("Options: ", skin);
 	options.setStyle(smallStyle);
-	buttonTable.add(options);
-	buttonTable.add(optionButton);
+	buttonTable.add(options).spaceBottom(20);
+	buttonTable.add(optionButton).spaceBottom(20);
 	
 	Gdx.input.setInputProcessor(stage);
 	Gdx.graphics.setContinuousRendering(false);
     }
     
     @Override
-    public void render() {
+    public void show() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void render(float delta) {
 	batch.begin();
 	bgSprite.draw(batch);
 	batch.end();
 	stage.draw();
+	
     }
-    
-    public void resize (int width, int height) {
-	stage.getViewport().update(width, height, true);
+
+    @Override
+    public void hide() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void resize(int width, int height) {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void pause() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void resume() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void dispose() {
+	// TODO Auto-generated method stub
+	stage.dispose();
+	background.dispose();
+	batch.dispose();
     }
 }
