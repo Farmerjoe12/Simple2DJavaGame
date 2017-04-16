@@ -31,6 +31,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
     @Override
     public void create() {
+	batch = new SpriteBatch();
+	//currentGame = new SPGame(this);
 	setScreen(new LaunchScreen(this));
 	/**
 	float w = Gdx.graphics.getWidth();
@@ -45,7 +47,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
     @Override
     public void render() {
-	currScreen.render(Gdx.graphics.getDeltaTime());
+	if (currScreen != null) {
+	    currScreen.render(Gdx.graphics.getDeltaTime());
+	} else currentGame.draw(batch);
 	if(assetManager.update()) {
 	    //asset manager is done loading
 	}

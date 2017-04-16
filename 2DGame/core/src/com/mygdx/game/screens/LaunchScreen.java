@@ -1,5 +1,6 @@
 package com.mygdx.game.screens;
 
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.entities.games.*;
 
 /**
  * Launch screen has become a valid Game screen to be drawn from MyGdxGame
@@ -33,7 +35,6 @@ import com.mygdx.game.MyGdxGame;
 public class LaunchScreen implements Screen{
 
     private MyGdxGame game;
-    private Screen currScreen = this;
     private Stage stage;
     private Skin skin;
     private Button singlePlay, multiPlay;
@@ -90,8 +91,8 @@ public class LaunchScreen implements Screen{
 	singlePlay.addListener(new ChangeListener() {
 	    @Override
 	    public void changed(ChangeEvent event, Actor actor) {
-		currScreen.hide();
-		game.setScreen(new SPGameScreen(game));
+		MyGdxGame.currScreen = null;
+		MyGdxGame.currentGame = new SPGame(game);
 	    }	    
 	});
 	Label single = new Label("Single-Player: ", skin);
