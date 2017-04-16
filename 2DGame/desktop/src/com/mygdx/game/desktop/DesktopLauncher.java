@@ -10,6 +10,7 @@ public class DesktopLauncher {
     config.title = "2D Java Game";
     config.width = 1280;
     config.height = 720;
+    config.resizable = false;
     new LwjglApplication(new Launch_Screen(), config); 
   }
 
