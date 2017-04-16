@@ -1,7 +1,6 @@
 package com.mygdx.game.screens;
 
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -9,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -21,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.entities.games.*;
+import com.mygdx.game.entities.games.SPGame;
 
 /**
  * Launch screen has become a valid Game screen to be drawn from MyGdxGame
@@ -34,23 +32,18 @@ import com.mygdx.game.entities.games.*;
  */
 public class LaunchScreen implements Screen{
 
-    private MyGdxGame game;
     private Stage stage;
-    private Skin skin;
     private Button singlePlay, multiPlay;
-    SpriteBatch batch;
-    Texture background;
-    Sprite bgSprite;
+    private SpriteBatch batch;
+    private Texture background;
+    private Sprite bgSprite;
 
-    public LaunchScreen(final MyGdxGame game) {
-	this.game = game;
-
+    public LaunchScreen() {
 	float w = Gdx.graphics.getWidth();
 	float h = Gdx.graphics.getHeight();
 	
-	// Stage, skin, and atlas
+	// Stage, skin
 	stage = new Stage(new ScreenViewport()); 
-	TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/Scene/medieval.atlas"));
 	Skin skin = new  Skin(Gdx.files.internal("data/Scene/medieval.json"));
 
 	// Background image
@@ -60,9 +53,13 @@ public class LaunchScreen implements Screen{
 	bgSprite.setSize(w,h);
 	
 	// Font & labelStyle
-	BitmapFont smallFont = new BitmapFont(Gdx.files.internal("data/Scene/prince.fnt"), Gdx.files.internal("data/Scene/princeFont.png"), false);
+	BitmapFont smallFont = new BitmapFont(
+		Gdx.files.internal("data/Scene/prince.fnt"), 
+		Gdx.files.internal("data/Scene/princeFont.png"), false);	
 	LabelStyle smallStyle = new LabelStyle(smallFont, new Color(255f,255f,255f, 1f));
-	BitmapFont largeFont = new BitmapFont(Gdx.files.internal("data/Scene/roman_big.fnt"), Gdx.files.internal("data/Scene/romanBigFont.png"), false);
+	BitmapFont largeFont = new BitmapFont(
+		Gdx.files.internal("data/Scene/roman_big.fnt"),
+		Gdx.files.internal("data/Scene/romanBigFont.png"), false);
 	LabelStyle largeStyle = new LabelStyle(largeFont, new Color(255f, 255f, 255f, 1f));
 	
 	// mainTable
@@ -92,7 +89,7 @@ public class LaunchScreen implements Screen{
 	    @Override
 	    public void changed(ChangeEvent event, Actor actor) {
 		MyGdxGame.currScreen = null;
-		MyGdxGame.currentGame = new SPGame(game);
+		MyGdxGame.currentGame = new SPGame();
 	    }	    
 	});
 	Label single = new Label("Single-Player: ", skin);
@@ -121,12 +118,6 @@ public class LaunchScreen implements Screen{
     }
     
     @Override
-    public void show() {
-	// TODO Auto-generated method stub
-	
-    }
-
-    @Override
     public void render(float delta) {
 	batch.begin();
 	bgSprite.draw(batch);
@@ -134,34 +125,24 @@ public class LaunchScreen implements Screen{
 	stage.draw();
 	
     }
+    
+    @Override
+    public void show() {} 
 
     @Override
-    public void hide() {
-	// TODO Auto-generated method stub
-	
-    }
+    public void hide() {}
 
     @Override
-    public void resize(int width, int height) {
-	// TODO Auto-generated method stub
-	
-    }
+    public void resize(int width, int height) { }
 
     @Override
-    public void pause() {
-	// TODO Auto-generated method stub
-	
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-	// TODO Auto-generated method stub
-	
-    }
+    public void resume() {}
 
     @Override
     public void dispose() {
-	// TODO Auto-generated method stub
 	stage.dispose();
 	background.dispose();
 	batch.dispose();

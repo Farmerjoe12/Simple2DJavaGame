@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -23,26 +22,15 @@ import com.mygdx.game.screens.LaunchScreen;
  */
 public class MyGdxGame extends ApplicationAdapter {
 
-    static AssetManager assetManager = new AssetManager();
+    private SpriteBatch batch;
+    public static AssetManager assetManager = new AssetManager();
     public static Screen currScreen;
-    SpriteBatch batch;
-    public static OrthographicCamera cam;
     public static Game currentGame;
 
     @Override
     public void create() {
 	batch = new SpriteBatch();
-	//currentGame = new SPGame(this);
-	setScreen(new LaunchScreen(this));
-	/**
-	float w = Gdx.graphics.getWidth();
-	float h = Gdx.graphics.getHeight();
-
-	cam = new OrthographicCamera(30, 30 * (h / w));
-	cam.setToOrtho(false, 960, 640);
-	cam.position.set(0, 0, 0);
-	cam.update();
-	*/
+	setScreen(new LaunchScreen());
     }
 
     @Override
@@ -63,8 +51,6 @@ public class MyGdxGame extends ApplicationAdapter {
     @Override
     public void dispose() {
 	assetManager.dispose();
-	super.pause();
-	super.dispose();
     }
 
     public void loadAssets() {

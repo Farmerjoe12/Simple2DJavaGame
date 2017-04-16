@@ -4,26 +4,19 @@ package com.mygdx.server;
  * Created by Jacob on 4/1/2017.
  */
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.TextureLoader;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.KryoSerialization;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.graphicsComponent.PlayerGraphics;
-import com.mygdx.game.components.inputComponent.InputComponent;
 import com.mygdx.game.components.inputComponent.PlayerInput;
 import com.mygdx.game.components.physicsComponent.Transform;
 import com.mygdx.game.entities.characters.Player;
 import com.mygdx.game.utilities.InputMapper;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class KryonetServer
 {
